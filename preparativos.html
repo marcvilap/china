@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preparativos · China 2026</title>
+  <meta name="description" content="Itinerario y logística de nuestro viaje familiar por China en 2026: Pekín, Xi'an, Chengdu, Chongqing, Zhangjiajie, Furong y Shanghái." />
+
+  <!-- Tipografías auto-alojadas (sin Google Fonts; funciona en China/offline) -->
+  <link rel="stylesheet" href="assets/fonts.css" />
+
+  <!-- Tailwind compilado (CSS estático, sin Play CDN) -->
+  <link rel="stylesheet" href="assets/tailwind.css" />
+
+
+  <style>
+    html { scroll-behavior: smooth; }
+    html, body { overflow-x: clip; max-width: 100%; }
+    body { -webkit-font-smoothing: antialiased; }
+    img, table, iframe { max-width: 100%; }
+
+    /* Foco accesible */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #C2922F;
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* Columna vertebral del itinerario (el "hilo" del recorrido) */
+    .spine { position: relative; }
+    .spine::before {
+      content: "";
+      position: absolute;
+      left: 27px;
+      top: 6px;
+      bottom: 6px;
+      width: 3px;
+      background: linear-gradient(180deg, #A8362B 0%, #A8362B 80%, rgba(168,54,43,0) 100%);
+      border-radius: 3px;
+    }
+    @media (min-width: 768px) {
+      .spine::before { left: 35px; }
+    }
+
+    /* Sello de tinta (印章) para marcar cada día */
+    .seal {
+      box-shadow: inset 0 0 0 2px rgba(244,238,225,0.35);
+      letter-spacing: 0.02em;
+    }
+
+    /* Micro-interacción en tarjetas */
+    .lift { transition: transform .25s ease, box-shadow .25s ease; }
+    .lift:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -22px rgba(23,18,15,0.55); }
+
+    /* Línea "rellenable" para campos del itinerario */
+    .fill-line {
+      border-bottom: 1px dashed rgba(140,90,60,0.45);
+      min-height: 1.4rem;
+    }
+
+    /* Borde dentado de billete */
+    .ticket { position: relative; }
+    .ticket::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: -1px;
+      height: 8px;
+      background-image: radial-gradient(circle at 6px -2px, transparent 6px, #F4EEE1 6px);
+      background-size: 16px 8px;
+      background-repeat: repeat-x;
+    }
+
+    /* Mapa Leaflet */
+    .leaflet-container { background: #EAE2D2; font-family: 'Inter', system-ui, sans-serif; }
+    .leaflet-div-icon { background: transparent; border: none; }
+    .seal-marker {
+      width: 30px; height: 30px;
+      background: #A8362B; color: #F4EEE1;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fraunces', serif; font-weight: 700; font-size: 13px;
+      box-shadow: 0 2px 6px rgba(23,18,15,.35), inset 0 0 0 2px rgba(244,238,225,.4);
+    }
+    .seal-marker.final { background: #17120F; color: #C2922F; }
+    .leaflet-popup-content { font-family: 'Inter', system-ui, sans-serif; margin: 12px 14px; }
+
+.fchip{border:1px solid rgba(244,238,225,.22);color:rgba(244,238,225,.72);cursor:pointer;}
+    .fchip:hover{border-color:rgba(244,238,225,.55);color:#F4EEE1;}
+    .fchip.is-active{background:#A8362B;border-color:#A8362B;color:#F4EEE1;}
+    .ptab{border:1px solid rgba(244,238,225,.22);color:rgba(244,238,225,.72);cursor:pointer;}
+    .ptab:hover{border-color:rgba(244,238,225,.55);color:#F4EEE1;}
+    .ptab.is-active{background:#A8362B;border-color:#A8362B;color:#F4EEE1;}
+    .ptab-light{border:1px solid rgba(140,90,60,.30);color:rgba(23,18,15,.6);cursor:pointer;}
+    .ptab-light:hover{border-color:rgba(168,54,43,.6);color:#A8362B;}
+    .ptab-light.is-active{background:#A8362B;border-color:#A8362B;color:#F4EEE1;}
+
+    .chk:checked + label{text-decoration:line-through;color:rgba(23,18,15,.38);}
+    #chkBar{transition:width .3s ease;}
+
+        @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .lift { transition: none; }
+    }
+  </style>
+</head>
+
+<body class="bg-paper font-body text-ink antialiased">
+
+  <!-- ════════════ NAV ════════════ -->
+  <header class="sticky top-0 z-50 bg-paper/85 backdrop-blur-md border-b border-clay/15">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 group">
+        <span class="font-cn text-2xl text-cinnabar leading-none">行</span>
+        <span class="font-display font-600 tracking-tight text-ink">China 2026</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <ul class="hidden sm:flex items-center gap-6 text-sm font-500">
+          <li><a href="index.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Inicio</a></li>
+          <li><a href="itinerario.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Itinerario</a></li>
+          <li><a href="hoteles.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Hoteles</a></li>
+          <li><a href="logistica.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Logística</a></li>
+          <li><a href="preparativos.html" aria-current="page" class="text-cinnabar transition-colors">Preparativos</a></li>
+        </ul>
+        <a href="index.html#ruta" class="hidden sm:inline-flex text-xs font-mono uppercase tracking-widest text-paper bg-cinnabar hover:bg-cinnabarDark transition-colors px-4 py-2 rounded-full">Ver ruta</a>
+        <button id="navToggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu" class="sm:hidden inline-flex items-center justify-center w-10 h-10 -mr-2 rounded-lg text-ink hover:bg-clay/10 transition-colors">
+          <svg id="navIconOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" /></svg>
+          <svg id="navIconClose" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobileMenu" class="sm:hidden hidden border-t border-clay/15 bg-paper/95 backdrop-blur-md">
+      <ul class="max-w-6xl mx-auto px-6 py-3 text-sm font-500">
+        <li><a href="index.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Inicio</a></li>
+        <li><a href="itinerario.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Itinerario</a></li>
+        <li><a href="hoteles.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Hoteles</a></li>
+        <li><a href="logistica.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Logística</a></li>
+        <li><a href="preparativos.html" aria-current="page" class="js-navlink block py-2.5 text-cinnabar transition-colors">Preparativos</a></li>
+        <li class="pt-2 pb-1"><a href="index.html#ruta" class="js-navlink block text-center text-xs font-mono uppercase tracking-widest text-paper bg-cinnabar hover:bg-cinnabarDark transition-colors px-4 py-3 rounded-full">Ver ruta</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ════════════ CHECKLIST / PREPARATIVOS ════════════ -->
+  <section id="checklist" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+    <div class="mb-8">
+      <p class="font-mono text-xs uppercase tracking-[0.3em] text-cinnabar mb-3">准备 · Antes de viajar</p>
+      <h2 class="font-display text-4xl md:text-5xl font-600 tracking-tight">Todo listo antes de volar</h2>
+      <p class="text-inksoft/70 mt-4 max-w-xl text-sm leading-relaxed">
+        Marca cada tarea conforme la completes. Tu progreso se guarda en este navegador, así que puedes ir volviendo poco a poco.
+      </p>
+    </div>
+
+    <!-- Progreso -->
+    <div class="bg-ink text-paper rounded-2xl p-5 md:p-6 mb-8 flex items-center gap-4 flex-wrap">
+      <div class="font-display text-2xl font-600 leading-none"><span id="chkCount">0</span><span class="text-paper/50"> / </span><span id="chkTotal">0</span></div>
+      <span class="font-mono text-[0.7rem] uppercase tracking-widest text-paper/50">completado</span>
+      <div class="flex-1 min-w-[140px] h-2.5 bg-paper/15 rounded-full overflow-hidden">
+        <div id="chkBar" class="h-full bg-cinnabar rounded-full" style="width:0%"></div>
+      </div>
+      <button id="chkReset" class="font-mono text-xs uppercase tracking-wider text-paper/60 hover:text-paper transition-colors">Reiniciar</button>
+    </div>
+
+    <!-- Categorías -->
+    <div class="grid md:grid-cols-2 gap-5 items-start">
+        <div class="bg-cream rounded-2xl border border-clay/15 p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="font-cn text-cinnabar text-xl">证件</span>
+            <h3 class="font-display text-xl font-600">Documentación</h3>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="doc1" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="doc1" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Pasaportes de los 4 con validez de al menos 6 meses tras el regreso (más allá de enero de 2027).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="doc2" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="doc2" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Sin visado: España tiene exención para estancias de hasta 30 días (vigente hasta el 31 dic 2026). Vuestro viaje son ~21 días.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="doc3" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="doc3" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Llevar prueba del billete de salida/vuelta (lo pueden pedir en frontera).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="doc4" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="doc4" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Billetes de Etihad y confirmaciones de hotel: impresos y en el móvil.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="doc5" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="doc5" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Seguro de viaje con cobertura médica internacional (la tarjeta sanitaria europea y Adeslas no cubren China sin módulo internacional).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="doc6" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="doc6" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Copias y escaneos de los pasaportes (en papel y en la nube).</label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-cream rounded-2xl border border-clay/15 p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="font-cn text-cinnabar text-xl">预订</span>
+            <h3 class="font-display text-xl font-600">Reservas con antelación</h3>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="res1" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="res1" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Hoteles confirmados en las 7 ciudades.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="res2" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="res2" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Vuelos internos: Furong/Zhangjiajie–Shanghái y el enlace PVG→PKX del 29 jul.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="res3" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="res3" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Billetes de tren de alta velocidad (se compran con pasaporte; en verano, cuanto antes).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="res4" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="res4" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Ciudad Prohibida: reserva 7 días antes con pasaporte (cierra los lunes).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="res5" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="res5" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Universal Studios Beijing (+ Express Pass).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="res6" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="res6" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Shanghai Disneyland (+ Premier Access).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="res7" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="res7" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Base de pandas de Chengdu (entrada a primera hora).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="res8" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="res8" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Parque de Zhangjiajie / ascensor Bailong y monte Tianmen.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="res9" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="res9" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Traslados privados aeropuerto–hotel.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="res10" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="res10" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Ópera de Sichuan (butacas cercanas).</label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-cream rounded-2xl border border-clay/15 p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="font-cn text-cinnabar text-xl">支付</span>
+            <h3 class="font-display text-xl font-600">Dinero y pagos</h3>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="pay1" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="pay1" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Configurar Alipay y/o WeChat Pay y vincular tarjeta ANTES de salir: en China casi todo es pago por móvil.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="pay2" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="pay2" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Avisar al banco del viaje y revisar los límites de la tarjeta.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="pay3" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="pay3" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Tarjeta sin comisiones en el extranjero (Revolut/Wise) recomendable.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="pay4" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="pay4" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Llevar algo de efectivo en yuanes para taxis y pequeños pagos.</label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-cream rounded-2xl border border-clay/15 p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="font-cn text-cinnabar text-xl">网络</span>
+            <h3 class="font-display text-xl font-600">Conectividad y apps</h3>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="net1" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="net1" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Instalar y probar una VPN de pago ANTES de viajar (Google, WhatsApp, Instagram… están bloqueados, y las webs de VPN también).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="net2" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="net2" class="text-sm text-inksoft/80 leading-snug cursor-pointer">eSIM/SIM con datos para China (mejor con salida internacional que evite el firewall) o roaming.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="net3" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="net3" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Descargar apps: Alipay, WeChat, DiDi (taxis), Trip.com y un traductor (Google Translate/Pleco) con paquetes offline.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="net4" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="net4" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Mapas offline descargados (útiles Apple Maps / Maps.me).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="net5" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="net5" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Adaptador de enchufe de China (tipo A/I), power bank y cables.</label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-cream rounded-2xl border border-clay/15 p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="font-cn text-cinnabar text-xl">健康</span>
+            <h3 class="font-display text-xl font-600">Salud y botiquín</h3>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="sal1" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="sal1" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Consultar el centro de vacunación internacional (vacunas rutinarias al día; valorar hepatitis A).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="sal2" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="sal2" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Botiquín familiar: analgésico/antitérmico de adulto e infantil, antidiarreico, suero oral, tiritas, antihistamínico.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="sal3" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="sal3" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Protección solar alta, repelente de mosquitos y gel hidroalcohólico.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="sal4" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="sal4" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Medicación habitual con su receta (nombre genérico) en el equipaje de mano.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="sal5" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="sal5" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Mascarillas y gafas de sol para todos.</label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-cream rounded-2xl border border-clay/15 p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="font-cn text-cinnabar text-xl">行李</span>
+            <h3 class="font-display text-xl font-600">Equipaje (julio: calor y humedad)</h3>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="eq1" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="eq1" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Ropa ligera y transpirable + una capa fina (Zhangjiajie es más fresco) y poncho/chubasquero.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="eq2" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="eq2" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Calzado cómodo de andar (hay empedrado y escaleras) y sandalias.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="eq3" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="eq3" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Mochila de día y botellas de agua reutilizables.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="eq4" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="eq4" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Entretenimiento para los vuelos: tablet cargada, auriculares, juegos y snacks.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="eq5" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="eq5" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Pañuelos/papel de bolsillo y toallitas (a veces no hay en baños públicos).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="eq6" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="eq6" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Muda extra para los niños en el equipaje de mano.</label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-cream rounded-2xl border border-clay/15 p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="font-cn text-cinnabar text-xl">出发前</span>
+            <h3 class="font-display text-xl font-600">Casa y antes de salir</h3>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="casa1" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="casa1" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Organizar el cuidado de los gatos (Mina y Charlie): persona de confianza o residencia.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="casa2" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="casa2" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Cobertura de PlayBox VR durante los días fuera (turnos de Game Masters y avisos).</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="casa3" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="casa3" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Vaciar la nevera, sacar la basura y revisar enchufes/termostato.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="casa4" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="casa4" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Dejar el itinerario y copia de documentos a alguien de confianza.</label>
+            </li>
+            <li class="flex items-start gap-3">
+              <input type="checkbox" id="casa5" class="chk mt-0.5 w-4 h-4 accent-cinnabar shrink-0 cursor-pointer" />
+              <label for="casa5" class="text-sm text-inksoft/80 leading-snug cursor-pointer">Registro policial: si os alojáis en hoteles, lo hacen ellos por vosotros (obligatorio en 24 h).</label>
+            </li>
+          </ul>
+        </div>
+    </div>
+  </section>
+
+
+
+  <footer class="bg-ink text-paper/70">
+    <div class="max-w-6xl mx-auto px-6 py-12 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-cn text-cinnabar text-2xl">行</span>
+        <span class="font-display font-600 text-paper">Mi Gran Viaje a China · 2026</span>
+      </div>
+      <p class="font-mono text-xs text-paper/40">Pekín · Xi'an · Chengdu · Chongqing · Zhangjiajie · Furong · Shanghái</p>
+    </div>
+    <p class="max-w-6xl mx-auto px-6 pb-8 -mt-2 font-mono text-[0.65rem] text-paper/30">Fotografías: Wikimedia Commons (licencias libres / CC). Mapa: © OpenStreetMap, © CARTO.</p>
+  </footer>
+
+  <!-- ===== Indicador "¿dónde estamos?" (según la fecha) ===== -->
+  <div id="hoyCard" class="fixed z-[60] inset-x-3 bottom-3 sm:inset-x-auto sm:right-4 sm:bottom-4 sm:max-w-sm" role="status" aria-live="polite" hidden>
+    <div class="bg-ink text-paper rounded-2xl shadow-2xl border border-paper/10 overflow-hidden">
+      <div class="flex items-start gap-3 p-4">
+        <div id="hoyEmoji" class="text-2xl leading-none mt-0.5">📍</div>
+        <div class="min-w-0 flex-1">
+          <p id="hoyKicker" class="font-mono text-[0.6rem] uppercase tracking-widest text-gold mb-0.5">Dónde estamos</p>
+          <p id="hoyTitle" class="font-display text-lg font-600 leading-tight"></p>
+          <p id="hoySub" class="text-paper/70 text-sm leading-snug mt-0.5"></p>
+          <button id="hoyGoto" type="button" class="mt-2 inline-flex items-center gap-1 font-mono text-[0.7rem] uppercase tracking-wider text-cinnabar hover:text-gold transition-colors">Ver el día <span aria-hidden="true">→</span></button>
+        </div>
+        <button id="hoyClose" type="button" aria-label="Cerrar" class="shrink-0 -mt-1 -mr-1 w-8 h-8 inline-flex items-center justify-center rounded-lg text-paper/60 hover:text-paper hover:bg-paper/10 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+      <div class="h-1 bg-cinnabar/25"><div id="hoyBarFill" class="h-full bg-cinnabar transition-[width] duration-500" style="width:0%"></div></div>
+    </div>
+  </div>
+  <button id="hoyFab" type="button" aria-label="¿Dónde estamos?" class="fixed z-[60] right-4 bottom-4 w-12 h-12 rounded-full bg-cinnabar text-paper shadow-xl items-center justify-center text-xl hidden">📍</button>
+
+  <!-- Checklist: progreso y guardado local -->
+  <script>
+    (function () {
+      var KEY = 'china2026_checklist';
+      var boxes = Array.prototype.slice.call(document.querySelectorAll('#checklist .chk'));
+      if (!boxes.length) return;
+      var countEl = document.getElementById('chkCount');
+      var totalEl = document.getElementById('chkTotal');
+      var barEl = document.getElementById('chkBar');
+      var total = boxes.length;
+      if (totalEl) totalEl.textContent = total;
+      function save() {
+        try { var s = {}; boxes.forEach(function (b) { s[b.id] = b.checked; }); localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {}
+      }
+      function load() {
+        try { var s = JSON.parse(localStorage.getItem(KEY) || '{}'); boxes.forEach(function (b) { if (s[b.id]) b.checked = true; }); } catch (e) {}
+      }
+      function update() {
+        var done = boxes.filter(function (b) { return b.checked; }).length;
+        if (countEl) countEl.textContent = done;
+        if (barEl) barEl.style.width = (total ? Math.round(done / total * 100) : 0) + '%';
+      }
+      load(); update();
+      boxes.forEach(function (b) { b.addEventListener('change', function () { save(); update(); }); });
+      var reset = document.getElementById('chkReset');
+      if (reset) reset.addEventListener('click', function () { boxes.forEach(function (b) { b.checked = false; }); save(); update(); });
+    })();
+  </script>
+
+  <!-- Menú móvil: abrir / cerrar -->
+  <script>
+    (function () {
+      var btn = document.getElementById('navToggle');
+      var menu = document.getElementById('mobileMenu');
+      if (!btn || !menu) return;
+      var iOpen = document.getElementById('navIconOpen');
+      var iClose = document.getElementById('navIconClose');
+      function setOpen(open) {
+        menu.classList.toggle('hidden', !open);
+        if (iOpen) iOpen.classList.toggle('hidden', open);
+        if (iClose) iClose.classList.toggle('hidden', !open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      }
+      btn.addEventListener('click', function () { setOpen(menu.classList.contains('hidden')); });
+      menu.querySelectorAll('.js-navlink').forEach(function (a) {
+        a.addEventListener('click', function () { setOpen(false); });
+      });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth >= 640) setOpen(false);
+      });
+    })();
+  </script>
+
+  <!-- "¿Dónde estamos?" según la fecha actual (hora de China) -->
+  <script>
+    (function () {
+      var DAYS = [
+        {d:"2026-07-09",l:"Jue 9 jul",c:"Pekín",cn:"北京",t:"Llegada a Pekín"},
+        {d:"2026-07-10",l:"Vie 10 jul",c:"Pekín",cn:"北京",t:"Ciudad Prohibida y Jingshan"},
+        {d:"2026-07-11",l:"Sáb 11 jul",c:"Pekín",cn:"北京",t:"La Gran Muralla (Mutianyu)"},
+        {d:"2026-07-12",l:"Dom 12 jul",c:"Pekín",cn:"北京",t:"Universal Studios Beijing"},
+        {d:"2026-07-13",l:"Lun 13 jul",c:"Pekín",cn:"北京",t:"Hutongs y Templo del Cielo"},
+        {d:"2026-07-14",l:"Mar 14 jul",c:"Xi'an",cn:"西安",t:"Pekín → Xi'an"},
+        {d:"2026-07-15",l:"Mié 15 jul",c:"Xi'an",cn:"西安",t:"Guerreros de Terracota"},
+        {d:"2026-07-16",l:"Jue 16 jul",c:"Chengdu",cn:"成都",t:"Xi'an → Chengdu"},
+        {d:"2026-07-17",l:"Vie 17 jul",c:"Chengdu",cn:"成都",t:"Los pandas gigantes"},
+        {d:"2026-07-18",l:"Sáb 18 jul",c:"Chengdu",cn:"成都",t:"Gran Buda de Leshan u ópera"},
+        {d:"2026-07-19",l:"Dom 19 jul",c:"Chongqing",cn:"重庆",t:"Chengdu → Chongqing"},
+        {d:"2026-07-20",l:"Lun 20 jul",c:"Chongqing",cn:"重庆",t:"Chongqing curiosa"},
+        {d:"2026-07-21",l:"Mar 21 jul",c:"Zhangjiajie",cn:"张家界",t:"Chongqing → Zhangjiajie"},
+        {d:"2026-07-22",l:"Mié 22 jul",c:"Zhangjiajie",cn:"张家界",t:"Montañas de Avatar"},
+        {d:"2026-07-23",l:"Jue 23 jul",c:"Zhangjiajie",cn:"张家界",t:"Monte Tianmen"},
+        {d:"2026-07-24",l:"Vie 24 jul",c:"Furong",cn:"芙蓉镇",t:"Zhangjiajie → Furong"},
+        {d:"2026-07-25",l:"Sáb 25 jul",c:"Shanghái",cn:"上海",t:"Furong → Shanghái"},
+        {d:"2026-07-26",l:"Dom 26 jul",c:"Shanghái",cn:"上海",t:"Shanghai Disneyland"},
+        {d:"2026-07-27",l:"Lun 27 jul",c:"Shanghái",cn:"上海",t:"Casco antiguo y río"},
+        {d:"2026-07-28",l:"Mar 28 jul",c:"Shanghái",cn:"上海",t:"Shanghái a tu aire"},
+        {d:"2026-07-29",l:"Mié 29 jul",c:"Shanghái",cn:"上海",t:"Regreso a casa"}
+      ];
+      var DEPART = "2026-07-08";
+      function chinaToday() {
+        try {
+          return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+        } catch (e) { return new Date().toISOString().slice(0, 10); }
+      }
+      function u(s) { var p = s.split('-'); return Date.UTC(+p[0], +p[1] - 1, +p[2]); }
+      function diff(a, b) { return Math.round((u(a) - u(b)) / 86400000); }
+
+      var card = document.getElementById('hoyCard');
+      var fab = document.getElementById('hoyFab');
+      if (!card || !fab) return;
+      var emoji = document.getElementById('hoyEmoji');
+      var kicker = document.getElementById('hoyKicker');
+      var title = document.getElementById('hoyTitle');
+      var sub = document.getElementById('hoySub');
+      var bar = document.getElementById('hoyBarFill');
+      var goto_ = document.getElementById('hoyGoto');
+
+      var today = chinaToday();
+      var idx = -1, i;
+      for (i = 0; i < DAYS.length; i++) { if (DAYS[i].d === today) { idx = i; break; } }
+      var total = DAYS.length;
+      var targetLabel = null;
+
+      if (idx >= 0) {
+        var day = DAYS[idx];
+        emoji.textContent = '📍';
+        kicker.textContent = 'Estáis aquí · Día ' + (idx + 1) + ' de ' + total;
+        title.textContent = day.c + '  ' + day.cn;
+        sub.textContent = day.t;
+        bar.style.width = Math.round((idx + 1) / total * 100) + '%';
+        targetLabel = day.l;
+      } else if (diff(today, DAYS[0].d) < 0) {
+        if (diff(today, DEPART) >= 0) {
+          emoji.textContent = '✈️';
+          kicker.textContent = '¡Hoy empieza el viaje!';
+          title.textContent = 'Rumbo a China';
+          sub.textContent = 'Vuelo de ida · Barcelona → Pekín';
+        } else {
+          var falta = diff(DAYS[0].d, today);
+          emoji.textContent = '🗓️';
+          kicker.textContent = 'Cuenta atrás';
+          title.textContent = 'Faltan ' + falta + (falta === 1 ? ' día' : ' días');
+          sub.textContent = 'Salida el 8 de julio · llegada a Pekín el 9';
+        }
+        goto_.style.display = 'none';
+      } else {
+        emoji.textContent = '🏠';
+        kicker.textContent = 'Viaje completado';
+        title.textContent = '¡De vuelta a casa!';
+        sub.textContent = 'Gracias por seguirnos · 21 días por China 🇨🇳';
+        bar.style.width = '100%';
+        goto_.style.display = 'none';
+      }
+
+      function show() { card.hidden = false; fab.classList.add('hidden'); fab.classList.remove('flex'); }
+      function hide() { card.hidden = true; fab.classList.remove('hidden'); fab.classList.add('flex'); }
+      try { if (sessionStorage.getItem('hoyClosed') === '1') hide(); else show(); } catch (e) { show(); }
+
+      document.getElementById('hoyClose').addEventListener('click', function () {
+        try { sessionStorage.setItem('hoyClosed', '1'); } catch (e) {}
+        hide();
+      });
+      fab.addEventListener('click', function () {
+        try { sessionStorage.removeItem('hoyClosed'); } catch (e) {}
+        show();
+      });
+      function scrollToDay(el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        var art = el.querySelector('article') || el;
+        art.style.outline = '2px solid #A8362B';
+        art.style.outlineOffset = '3px';
+        setTimeout(function () { art.style.outline = ''; art.style.outlineOffset = ''; }, 2600);
+      }
+      goto_.addEventListener('click', function () {
+        if (idx < 0) return;
+        var el = document.getElementById('dia-' + (idx + 1));
+        if (el) scrollToDay(el);
+        else window.location.href = 'itinerario.html#dia-' + (idx + 1);
+      });
+      if (/^#dia-\d+$/.test(location.hash)) {
+        var t0 = document.getElementById(location.hash.slice(1));
+        if (t0) setTimeout(function () { scrollToDay(t0); }, 300);
+      }
+    })();
+  </script>
+
+</body>
+</html>
