@@ -6,42 +6,15 @@
   <title>Mi Gran Viaje a China · 2026</title>
   <meta name="description" content="Itinerario y logística de nuestro viaje familiar por China en 2026: Pekín, Xi'an, Chengdu, Chongqing, Zhangjiajie, Furong y Shanghái." />
 
-  <!-- Tipografías -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Tipografías auto-alojadas (sin Google Fonts; funciona en China/offline) -->
+  <link rel="stylesheet" href="assets/fonts.css" />
 
-  <!-- Tailwind (Play CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            paper:   '#F4EEE1', // crema papel de arroz
-            cream:   '#FBF7EE', // crema clara
-            ink:     '#17120F', // tinta / contraste oscuro
-            inksoft: '#2A231E',
-            cinnabar:'#A8362B', // rojo cinabrio elegante
-            cinnabarDark:'#7E261E',
-            gold:    '#C2922F', // oro imperial (acentos finos)
-            jade:    '#3F6B57', // verde jade natural
-            clay:    '#8C5A3C',
-          },
-          fontFamily: {
-            display: ['Fraunces', 'serif'],
-            body:    ['Inter', 'system-ui', 'sans-serif'],
-            cn:      ['"Noto Serif SC"', 'serif'],
-            mono:    ['"Space Mono"', 'monospace'],
-          },
-        },
-      },
-    };
-  </script>
+  <!-- Tailwind compilado (CSS estático, sin Play CDN) -->
+  <link rel="stylesheet" href="assets/tailwind.css" />
 
-  <!-- Leaflet (mapa interactivo de trayectos) -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Leaflet (auto-alojado) -->
+  <link rel="stylesheet" href="assets/leaflet/leaflet.css" />
+  <script src="assets/leaflet/leaflet.js"></script>
 
   <style>
     html { scroll-behavior: smooth; }
