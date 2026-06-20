@@ -142,17 +142,12 @@
 
   <!-- ════════════ HERO ════════════ -->
   <section id="inicio" class="relative overflow-hidden bg-ink text-paper">
-    <!-- Carácter de fondo: 行 (viaje / recorrido) -->
-    <span aria-hidden="true" class="pointer-events-none select-none absolute -right-10 -bottom-24 md:-bottom-32 font-cn font-900 text-cinnabar/10 leading-none text-[22rem] md:text-[34rem]">行</span>
     <!-- textura sutil -->
     <div aria-hidden="true" class="absolute inset-0 opacity-[0.04]" style="background-image:radial-gradient(circle at 1px 1px, #F4EEE1 1px, transparent 0); background-size:22px 22px;"></div>
 
-    <div class="relative max-w-6xl mx-auto px-6 pt-20 pb-24 md:pt-28 md:pb-32">
-      <p class="font-mono text-xs sm:text-sm uppercase tracking-[0.35em] text-gold mb-6">
-        旅程 · El viaje de nuestra vida
-      </p>
-
-      <h1 class="font-display font-600 leading-[0.95] tracking-tight text-[3.2rem] sm:text-7xl md:text-8xl">
+    <div class="relative max-w-6xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+      <div class="order-last md:order-first">
+      <h1 class="font-display font-600 leading-[0.95] tracking-tight text-[3.0rem] sm:text-5xl md:text-6xl">
         Mi Gran Viaje<br />
         <span class="text-cinnabar">a China</span> <span class="text-paper/95">2026</span>
       </h1>
@@ -188,6 +183,10 @@
         <a href="itinerario.html" class="inline-flex items-center gap-2 text-paper/80 hover:text-paper transition-colors font-500 px-2 py-4">
           Ir al itinerario día a día
         </a>
+      </div>
+      </div>
+      <div class="order-first md:order-last">
+        <img src="assets/familia.jpg" alt="Nuestra familia" class="w-full h-60 sm:h-80 md:h-[480px] object-cover rounded-2xl shadow-2xl border border-paper/10" loading="eager" />
       </div>
     </div>
   </section>
