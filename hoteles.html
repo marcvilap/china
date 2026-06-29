@@ -761,5 +761,92 @@
   </script>
   <!-- /lightbox -->
 
+  <!-- ===== Popup: mapa grande de la ruta (enlace "Mapa" del menú) ===== -->
+  <div id="rutaMapModal" class="fixed inset-0 bg-ink/95 hidden items-center justify-center p-4" style="z-index:90" role="dialog" aria-modal="true" aria-label="Mapa de la ruta">
+    <div class="relative w-full max-w-4xl">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2 min-w-0">
+          <span class="font-cn text-cinnabar text-xl">行</span>
+          <span class="font-display font-600 text-paper text-base sm:text-lg truncate">Mapa de la ruta · China 2026</span>
+        </div>
+        <button id="rutaMapClose" type="button" aria-label="Cerrar" class="shrink-0 w-10 h-10 inline-flex items-center justify-center rounded-full bg-paper/10 hover:bg-paper/20 text-paper text-2xl leading-none transition-colors">&times;</button>
+      </div>
+      <div id="rutaMapBox" class="w-full rounded-2xl overflow-hidden border border-paper/15 bg-cream" style="height:72vh"></div>
+      <p class="font-mono text-[0.65rem] text-paper/40 mt-2 text-center">Pekín → Xi'an → Chengdu → Chongqing → Zhangjiajie → Furong → Shanghái</p>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var modal = document.getElementById('rutaMapModal');
+      if (!modal) return;
+      if (!document.body.hasAttribute('data-mapnav')) {
+        document.body.setAttribute('data-mapnav', '1');
+        var dUl = document.querySelector('header nav ul');
+        if (dUl) {
+          var dli = document.createElement('li');
+          dli.innerHTML = '<a href="#" class="js-open-map cursor-pointer text-inksoft/80 hover:text-cinnabar transition-colors">Mapa</a>';
+          dUl.appendChild(dli);
+        }
+        var mUl = document.querySelector('#mobileMenu ul');
+        if (mUl) {
+          var mli = document.createElement('li');
+          mli.innerHTML = '<a href="#" class="js-open-map block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Mapa</a>';
+          var cta = mUl.querySelector('li.pt-2');
+          if (cta) mUl.insertBefore(mli, cta); else mUl.appendChild(mli);
+        }
+      }
+      var box = document.getElementById('rutaMapBox');
+      var stops = [
+        { n: '01', name: 'Pekín', cn: '北京', lat: 39.9042, lng: 116.4074 },
+        { n: '02', name: "Xi'an", cn: '西安', lat: 34.3416, lng: 108.9398 },
+        { n: '03', name: 'Chengdu', cn: '成都', lat: 30.5728, lng: 104.0668 },
+        { n: '04', name: 'Chongqing', cn: '重庆', lat: 29.5630, lng: 106.5516 },
+        { n: '05', name: 'Zhangjiajie', cn: '张家界', lat: 29.1170, lng: 110.4794 },
+        { n: '06', name: 'Furong', cn: '芙蓉镇', lat: 28.7050, lng: 109.9930 },
+        { n: '07', name: 'Shanghái', cn: '上海', lat: 31.2304, lng: 121.4737 }
+      ];
+      var map = null;
+      function loadLeaflet(cb) {
+        if (typeof L !== 'undefined') { cb(); return; }
+        if (!document.querySelector('link[data-leaflet]')) {
+          var lk = document.createElement('link'); lk.rel = 'stylesheet'; lk.href = 'assets/leaflet/leaflet.css'; lk.setAttribute('data-leaflet', '1'); document.head.appendChild(lk);
+        }
+        var ex = document.querySelector('script[data-leaflet]');
+        if (ex) { ex.addEventListener('load', cb); return; }
+        var sc = document.createElement('script'); sc.src = 'assets/leaflet/leaflet.js'; sc.setAttribute('data-leaflet', '1'); sc.onload = cb; document.body.appendChild(sc);
+      }
+      function refit() { if (map && map.__line) { map.invalidateSize(); try { map.fitBounds(map.__line, { padding: [45, 45] }); } catch (e) {} } }
+      function build() {
+        if (map) { refit(); return; }
+        if (typeof L === 'undefined') return;
+        map = L.map(box, { scrollWheelZoom: false });
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap, &copy; CARTO', subdomains: 'abcd', maxZoom: 19 }).addTo(map);
+        var line = stops.map(function (s) { return [s.lat, s.lng]; });
+        L.polyline(line, { color: '#A8362B', weight: 4, opacity: 0.9 }).addTo(map);
+        L.polyline([[stops[stops.length - 1].lat, stops[stops.length - 1].lng], [stops[0].lat, stops[0].lng]], { color: '#8C5A3C', weight: 2, opacity: 0.85, dashArray: '6 9' }).addTo(map);
+        stops.forEach(function (s, i) {
+          var fin = i === stops.length - 1, bg = fin ? '#17120F' : '#A8362B', fg = fin ? '#C2922F' : '#F4EEE1';
+          var html = '<div style="width:30px;height:30px;background:' + bg + ';color:' + fg + ';border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:700;font-size:13px;box-shadow:0 2px 6px rgba(23,18,15,.35),inset 0 0 0 2px rgba(244,238,225,.4);">' + s.n + '</div>';
+          var icon = L.divIcon({ html: html, className: '', iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -16] });
+          L.marker([s.lat, s.lng], { icon: icon }).addTo(map).bindPopup('<strong style="font-family:Fraunces,serif;font-size:15px;">' + s.name + '</strong> <span style="color:#A8362B;">' + s.cn + '</span>');
+        });
+        map.__line = line;
+        map.fitBounds(line, { padding: [45, 45] });
+      }
+      function openModal() {
+        modal.classList.remove('hidden'); modal.classList.add('flex');
+        document.documentElement.style.overflow = 'hidden';
+        var mm = document.getElementById('mobileMenu'); if (mm) mm.classList.add('hidden');
+        loadLeaflet(function () { setTimeout(build, 30); setTimeout(refit, 280); });
+      }
+      function closeModal() { modal.classList.add('hidden'); modal.classList.remove('flex'); document.documentElement.style.overflow = ''; }
+      document.querySelectorAll('.js-open-map').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); openModal(); }); });
+      document.getElementById('rutaMapClose').addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
+    })();
+  </script>
+  <!-- /popup mapa -->
+
 </body>
 </html>
