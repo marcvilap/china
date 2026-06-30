@@ -141,6 +141,8 @@
     .trm-btn.ghost:hover{border-color:#A8362B;color:#A8362B;}
     .trm-map{border-radius:12px;overflow:hidden;border:1px solid rgba(140,90,60,.2);background:#EAE2D2;}
     .trm-map iframe{width:100%;height:230px;border:0;display:block;}
+    .trm-pending{font-size:.82rem;line-height:1.45;color:#8C5A3C;background:rgba(140,90,60,.07);border:1px dashed rgba(140,90,60,.45);border-radius:10px;padding:10px 13px;}
+    .trm-pending b{color:#17120F;}
 
         @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -463,7 +465,7 @@
           actions: [{ label: "Recibo PDF", href: "docs/billete-tren-1-pekin-xian-14jul.pdf", kind: "primary", blank: true }, { label: "Ver día 6", href: "itinerario.html#dia-6", kind: "ghost" }]
         },
         seg2: {
-          kick: "Tren · 16 jul · recomendado", title: "Xi'an → Chengdu", status: "pordecidir",
+          kick: "Tren · 16 jul · recomendado", title: "Xi'an → Chengdu", status: "pordecidir", pending: true,
           dep: { t: "—", name: "Xi'an Norte", cn: "西安北" }, arr: { t: "—", name: "Chengdu Este", cn: "成都东" }, dur: "~4 h",
           legs: [
             { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Gran Meliá Xi'an</b> (Qujiang) a <b>Xi'an Norte</b>: <b>~40–50 min</b> en metro/taxi." },
@@ -474,7 +476,7 @@
           actions: [{ label: "Ver día 8", href: "itinerario.html#dia-8", kind: "ghost" }]
         },
         seg3: {
-          kick: "Tren · 19 jul · recomendado", title: "Chengdu → Chongqing", status: "pordecidir",
+          kick: "Tren · 19 jul · recomendado", title: "Chengdu → Chongqing", status: "pordecidir", pending: true,
           dep: { t: "—", name: "Chengdu Este", cn: "成都东" }, arr: { t: "—", name: "Chongqing Norte", cn: "重庆北" }, dur: "~1 h 30 m",
           legs: [
             { ic: "🏨", label: "Del hotel a la estación", text: "Del hotel de Chengdu a <b>Chengdu Este</b>: <b>~20–30 min</b> en metro/taxi." },
@@ -485,7 +487,7 @@
           actions: [{ label: "Ver día 11", href: "itinerario.html#dia-11", kind: "ghost" }]
         },
         seg4: {
-          kick: "Tren · 21 jul · recomendado", title: "Chongqing → Zhangjiajie", status: "pordecidir",
+          kick: "Tren · 21 jul · recomendado", title: "Chongqing → Zhangjiajie", status: "pordecidir", pending: true,
           dep: { t: "—", name: "Chongqing Norte/Oeste", cn: "重庆" }, arr: { t: "—", name: "Zhangjiajie Oeste", cn: "张家界西" }, dur: "~5,5–7 h",
           legs: [
             { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>IntercityHotel</b> (Jiefangbei) a la estación: <b>~30–50 min</b>. Salid con tiempo." },
@@ -496,7 +498,7 @@
           actions: [{ label: "Ver día 13", href: "itinerario.html#dia-13", kind: "ghost" }]
         },
         seg5: {
-          kick: "Tren · 24 jul · recomendado", title: "Zhangjiajie → Furong", status: "pordecidir",
+          kick: "Tren · 24 jul · recomendado", title: "Zhangjiajie → Furong", status: "pordecidir", pending: true,
           dep: { t: "—", name: "Zhangjiajie Oeste", cn: "张家界西" }, arr: { t: "—", name: "Furongzhen", cn: "芙蓉镇" }, dur: "~30–45 min",
           legs: [
             { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Avatar Mountain Resort</b> (Wulingyuan) a <b>Zhangjiajie Oeste</b>: <b>~40–50 min</b> en coche." },
@@ -507,7 +509,7 @@
           actions: [{ label: "Ver día 16", href: "itinerario.html#dia-16", kind: "ghost" }]
         },
         seg6: {
-          kick: "Tren G221 · 25 jul · directo", title: "Furong → Shanghái", status: "decidido",
+          kick: "Tren G221 · 25 jul · directo", title: "Furong → Shanghái", status: "decidido", pending: true,
           dep: { t: "15:03", name: "Furongzhen", cn: "芙蓉镇" }, arr: { t: "21:57", name: "Shanghái Hongqiao", cn: "上海虹桥" }, dur: "6 h 54 m",
           legs: [
             { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Annai · Xizhou Ji Hotel</b> (pueblo de Furong) a <b>Furongzhen</b>: <b>~10–15 min</b>." },
@@ -541,6 +543,9 @@
           h += '<div class="trm-sec"><p class="trm-lbl">🗺️ Ruta en Google Maps</p>';
           h += '<div class="trm-map"><iframe src="' + t.gmaps.embed + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ruta en Google Maps"></iframe></div>';
           h += '<a class="trm-btn ghost" style="margin-top:10px;" href="' + t.gmaps.link + '" target="_blank" rel="noopener">Abrir ruta en Google Maps ↗</a></div>';
+        }
+        else if (t.pending) {
+          h += '<div class="trm-sec"><div class="trm-pending">🚧 <b>Ruta detallada pendiente.</b> Añadiremos el mapa de Google Maps y el trayecto exacto hotel ↔ estación cuando se decida o se compre este tren.</div></div>';
         }
         if (t.facts && t.facts.length) {
           h += '<div class="trm-sec"><div class="trm-grid">';
