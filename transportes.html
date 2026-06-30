@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Logística · China 2026</title>
-  <meta name="description" content="Itinerario y logística de nuestro viaje familiar por China en 2026: Pekín, Xi'an, Chengdu, Chongqing, Zhangjiajie, Furong y Shanghái." />
+  <title>Transportes · China 2026</title>
+  <meta name="description" content="Transportes de nuestro viaje familiar por China en 2026: vuelos, trenes y trayectos internos entre Pekín, Xi'an, Chengdu, Chongqing, Zhangjiajie, Furong y Shanghái." />
 
   <!-- Tipografías auto-alojadas (sin Google Fonts; funciona en China/offline) -->
   <link rel="stylesheet" href="assets/fonts.css" />
@@ -97,6 +97,49 @@
     .chk:checked + label{text-decoration:line-through;color:rgba(23,18,15,.38);}
     #chkBar{transition:width .3s ease;}
 
+    /* ===== Filas de transporte pulsables ===== */
+    .tr-row{cursor:pointer;transition:background-color .18s ease;}
+    .tr-row:hover{background:rgba(140,90,60,.06);}
+    .tr-row:focus-visible{outline:2px solid #C2922F;outline-offset:-2px;}
+    .tr-more{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:#A8362B;}
+
+    /* ===== Modal de detalle de transporte ===== */
+    .trm-ov{position:fixed;inset:0;background:rgba(23,18,15,.80);display:none;align-items:flex-start;justify-content:center;padding:5vh 16px;z-index:95;}
+    .trm-ov.open{display:flex;}
+    .trm-card{position:relative;background:#F4EEE1;color:#17120F;width:100%;max-width:560px;max-height:90vh;overflow:auto;border-radius:18px;border:1px solid rgba(140,90,60,.28);box-shadow:0 30px 80px -20px rgba(23,18,15,.65);}
+    .trm-head{position:sticky;top:0;z-index:1;background:#17120F;color:#F4EEE1;padding:18px 48px 16px 20px;}
+    .trm-x{position:absolute;top:13px;right:13px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(244,238,225,.12);color:#F4EEE1;font-size:22px;line-height:1;cursor:pointer;}
+    .trm-x:hover{background:rgba(244,238,225,.24);}
+    .trm-kick{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:#C2922F;}
+    .trm-title{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;line-height:1.15;margin-top:4px;}
+    .trm-cn{color:#E07A5F;font-family:'Noto Serif SC',serif;}
+    .trm-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 11px;border-radius:999px;margin-top:11px;}
+    .b-comprado{background:rgba(63,107,87,.3);color:#A9D9C2;}
+    .b-decidido{background:rgba(194,146,47,.26);color:#EBC472;}
+    .b-pordecidir{background:rgba(244,238,225,.16);color:#E8D7C4;}
+    .trm-body{padding:18px 20px 22px;}
+    .trm-route{display:flex;align-items:center;gap:12px;background:#FBF7EE;border:1px solid rgba(140,90,60,.18);border-radius:14px;padding:14px 16px;}
+    .trm-stop{flex:1;min-width:0;}
+    .trm-stop .t{font-family:'Space Mono',monospace;font-size:1.05rem;font-weight:700;color:#17120F;}
+    .trm-stop .p{font-size:.8rem;color:#2A231E;margin-top:2px;line-height:1.25;}
+    .trm-stop .c{color:#A8362B;font-family:'Noto Serif SC',serif;}
+    .trm-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#A8362B;}
+    .trm-arrow .d{font-family:'Space Mono',monospace;font-size:.56rem;color:#8C5A3C;white-space:nowrap;margin-top:3px;}
+    .trm-sec{margin-top:16px;}
+    .trm-lbl{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#8C5A3C;margin-bottom:5px;}
+    .trm-leg-tx{font-size:.86rem;line-height:1.4;color:#2A231E;}
+    .trm-leg-tx b{font-weight:600;color:#17120F;}
+    .trm-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px 16px;margin-top:4px;}
+    .trm-kv .k{font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:#8C5A3C;}
+    .trm-kv .v{font-size:.9rem;color:#17120F;margin-top:1px;line-height:1.25;}
+    .trm-note{margin-top:16px;font-size:.84rem;line-height:1.45;color:#2A231E;background:rgba(194,146,47,.12);border-left:3px solid #C2922F;border-radius:0 10px 10px 0;padding:10px 14px;}
+    .trm-actions{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;}
+    .trm-btn{display:inline-flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;border-radius:999px;text-decoration:none;cursor:pointer;}
+    .trm-btn.primary{background:#A8362B;color:#F4EEE1;}
+    .trm-btn.primary:hover{background:#7E261E;}
+    .trm-btn.ghost{background:transparent;border:1px solid rgba(140,90,60,.4);color:#8C5A3C;}
+    .trm-btn.ghost:hover{border-color:#A8362B;color:#A8362B;}
+
         @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .lift { transition: none; }
@@ -121,7 +164,7 @@
           <li><a href="index.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Inicio</a></li>
           <li><a href="itinerario.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Itinerario</a></li>
           <li><a href="hoteles.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Hoteles</a></li>
-          <li><a href="logistica.html" aria-current="page" class="text-cinnabar transition-colors">Logística</a></li>
+          <li><a href="transportes.html" aria-current="page" class="text-cinnabar transition-colors">Transportes</a></li>
           <li><a href="preparativos.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Preparativos</a></li>
         </ul>
         <a href="index.html#ruta" class="hidden sm:inline-flex text-xs font-mono uppercase tracking-widest text-paper bg-cinnabar hover:bg-cinnabarDark transition-colors px-4 py-2 rounded-full">Ver ruta</a>
@@ -136,7 +179,7 @@
         <li><a href="index.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Inicio</a></li>
         <li><a href="itinerario.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Itinerario</a></li>
         <li><a href="hoteles.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Hoteles</a></li>
-        <li><a href="logistica.html" aria-current="page" class="js-navlink block py-2.5 text-cinnabar transition-colors">Logística</a></li>
+        <li><a href="transportes.html" aria-current="page" class="js-navlink block py-2.5 text-cinnabar transition-colors">Transportes</a></li>
         <li><a href="preparativos.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Preparativos</a></li>
         <li class="pt-2 pb-1"><a href="index.html#ruta" class="js-navlink block text-center text-xs font-mono uppercase tracking-widest text-paper bg-cinnabar hover:bg-cinnabarDark transition-colors px-4 py-3 rounded-full">Ver ruta</a></li>
       </ul>
@@ -144,10 +187,11 @@
   </header>
 
   <!-- ════════════ MAPA Y LOGÍSTICA ════════════ -->
-  <section id="logistica" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+  <section id="transportes" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
     <div class="mb-12">
       <p class="font-mono text-xs uppercase tracking-[0.3em] text-cinnabar mb-3">交通 · Cómo nos movemos</p>
-      <h2 class="font-display text-4xl md:text-5xl font-600 tracking-tight">Mapa y logística</h2>
+      <h2 class="font-display text-4xl md:text-5xl font-600 tracking-tight">Transportes</h2>
+      <p class="mt-4 text-inksoft/70 text-sm md:text-base leading-relaxed max-w-2xl">Vuelos, trenes y trayectos internos del viaje. <span class="text-ink/80">Pulsa cualquier transporte</span> para ver el detalle: de dónde sale, el trayecto del hotel a la estación o aeropuerto, horarios y estado (comprado, decidido o por decidir).</p>
     </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
@@ -173,7 +217,7 @@
           </div>
         </div>
         <p class="text-xs text-inksoft/60 mt-3 leading-relaxed">
-          Cada sello numerado marca una parada en orden de visita. La línea roja une los 6 trayectos entre ciudades (cinco en tren y el último, Furong–Shanghái, en avión); la discontinua es el vuelo interno del 29 jul para enlazar la vuelta. Pulsa cada sello para ver el detalle.
+          Cada sello numerado marca una parada en orden de visita. La línea roja une los 6 trayectos entre ciudades (todos en tren de alta velocidad, incluido el directo Furong–Shanghái G221); la discontinua es el vuelo interno del 29 jul (Shanghái→Pekín) para enlazar la vuelta. Pulsa cada sello para ver el detalle.
         </p>
       </div>
 
@@ -190,7 +234,7 @@
           <div class="bg-cream rounded-xl border border-clay/15 overflow-hidden divide-y divide-clay/12">
 
             <p class="font-mono text-[0.65rem] uppercase tracking-widest text-jade bg-jade/5 px-4 py-1.5">Ida</p>
-            <div class="flex items-center justify-between gap-3 px-4 py-3">
+            <div data-tr="ey1" role="button" tabindex="0" title="Ver detalle del vuelo" class="tr-row flex items-center justify-between gap-3 px-4 py-3">
               <div>
                 <p class="font-mono text-[0.7rem] text-clay">EY112</p>
                 <p class="font-display font-600">Barcelona → Abu Dabi</p>
@@ -198,9 +242,10 @@
               <div class="text-right font-mono text-sm leading-tight">
                 <p>10:45 <span class="text-clay">→</span> 19:20</p>
                 <p class="text-[0.7rem] text-clay">8 jul</p>
+                <p class="tr-more">Detalle ›</p>
               </div>
             </div>
-            <div class="flex items-center justify-between gap-3 px-4 py-3">
+            <div data-tr="ey2" role="button" tabindex="0" title="Ver detalle del vuelo" class="tr-row flex items-center justify-between gap-3 px-4 py-3">
               <div>
                 <p class="font-mono text-[0.7rem] text-clay">EY888</p>
                 <p class="font-display font-600">Abu Dabi → Pekín (PKX)</p>
@@ -208,11 +253,12 @@
               <div class="text-right font-mono text-sm leading-tight">
                 <p>21:00 <span class="text-clay">→</span> 09:00</p>
                 <p class="text-[0.7rem] text-clay">8–9 jul</p>
+                <p class="tr-more">Detalle ›</p>
               </div>
             </div>
 
             <p class="font-mono text-[0.65rem] uppercase tracking-widest text-cinnabar bg-cinnabar/5 px-4 py-1.5">Interno</p>
-            <div class="flex items-center justify-between gap-3 px-4 py-3">
+            <div data-tr="eyint" role="button" tabindex="0" title="Ver detalle del vuelo" class="tr-row flex items-center justify-between gap-3 px-4 py-3">
               <div>
                 <p class="font-mono text-[0.7rem] text-clay">EY5931</p>
                 <p class="font-display font-600">Shanghái (PVG) → Pekín (PKX)</p>
@@ -220,11 +266,12 @@
               <div class="text-right font-mono text-sm leading-tight">
                 <p>09:15 <span class="text-clay">→</span> 11:20</p>
                 <p class="text-[0.7rem] text-clay">29 jul</p>
+                <p class="tr-more">Detalle ›</p>
               </div>
             </div>
 
             <p class="font-mono text-[0.65rem] uppercase tracking-widest text-jade bg-jade/5 px-4 py-1.5">Vuelta</p>
-            <div class="flex items-center justify-between gap-3 px-4 py-3">
+            <div data-tr="eyv1" role="button" tabindex="0" title="Ver detalle del vuelo" class="tr-row flex items-center justify-between gap-3 px-4 py-3">
               <div>
                 <p class="font-mono text-[0.7rem] text-clay">EY889</p>
                 <p class="font-display font-600">Pekín (PKX) → Abu Dabi</p>
@@ -232,9 +279,10 @@
               <div class="text-right font-mono text-sm leading-tight">
                 <p>19:40 <span class="text-clay">→</span> 00:25</p>
                 <p class="text-[0.7rem] text-clay">29–30 jul</p>
+                <p class="tr-more">Detalle ›</p>
               </div>
             </div>
-            <div class="flex items-center justify-between gap-3 px-4 py-3">
+            <div data-tr="eyv2" role="button" tabindex="0" title="Ver detalle del vuelo" class="tr-row flex items-center justify-between gap-3 px-4 py-3">
               <div>
                 <p class="font-mono text-[0.7rem] text-clay">EY111</p>
                 <p class="font-display font-600">Abu Dabi → Barcelona</p>
@@ -242,6 +290,7 @@
               <div class="text-right font-mono text-sm leading-tight">
                 <p>02:30 <span class="text-clay">→</span> 07:35</p>
                 <p class="text-[0.7rem] text-clay">30 jul</p>
+                <p class="tr-more">Detalle ›</p>
               </div>
             </div>
 
@@ -270,48 +319,48 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-clay/12">
-                <tr>
-                  <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">1</span>Pekín → Xi'an</td>
+                <tr data-tr="seg1" role="button" tabindex="0" title="Ver detalle del trayecto" class="tr-row">
+                  <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">1</span>Pekín → Xi'an <span class="tr-more">· Detalle ›</span></td>
                   <td class="px-4 py-3 font-mono text-xs text-gold whitespace-nowrap">Mar 14 jul</td>
                   <td class="px-4 py-3"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-cinnabar/10 text-cinnabar px-2 py-0.5 rounded-full">Tren</span></td>
                   <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">12:55→17:08</td>
                   <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">253,46 € (4 pax)</td>
                   <td class="px-4 py-3 text-inksoft/55 text-xs"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-jade/15 text-jade px-2 py-0.5 rounded-full">&#10003; Comprado</span> <a href="docs/billete-tren-1-pekin-xian-14jul.pdf" target="_blank" rel="noopener" class="text-cinnabar underline hover:text-cinnabarDark">Recibo PDF</a></td>
                 </tr>
-                <tr>
-                  <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">2</span>Xi'an → Chengdu</td>
+                <tr data-tr="seg2" role="button" tabindex="0" title="Ver detalle del trayecto" class="tr-row">
+                  <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">2</span>Xi'an → Chengdu <span class="tr-more">· Detalle ›</span></td>
                   <td class="px-4 py-3 font-mono text-xs text-gold whitespace-nowrap">Jue 16 jul</td>
                   <td class="px-4 py-3"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-cinnabar/10 text-cinnabar px-2 py-0.5 rounded-full">Tren</span></td>
                   <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">~4 h</td>
                   <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">€45–113</td>
                   <td class="px-4 py-3 text-inksoft/55 text-xs">Vuelo posible (más caro)</td>
                 </tr>
-                <tr>
-                  <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">3</span>Chengdu → Chongqing</td>
+                <tr data-tr="seg3" role="button" tabindex="0" title="Ver detalle del trayecto" class="tr-row">
+                  <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">3</span>Chengdu → Chongqing <span class="tr-more">· Detalle ›</span></td>
                   <td class="px-4 py-3 font-mono text-xs text-gold whitespace-nowrap">Dom 19 jul</td>
                   <td class="px-4 py-3"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-cinnabar/10 text-cinnabar px-2 py-0.5 rounded-full">Tren</span></td>
                   <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">~1,5 h</td>
                   <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">€18–25</td>
                   <td class="px-4 py-3 text-inksoft/55 text-xs">Vuelo no compensa (aeropuertos lejos)</td>
                 </tr>
-                <tr>
-                  <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">4</span>Chongqing → Zhangjiajie</td>
+                <tr data-tr="seg4" role="button" tabindex="0" title="Ver detalle del trayecto" class="tr-row">
+                  <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">4</span>Chongqing → Zhangjiajie <span class="tr-more">· Detalle ›</span></td>
                   <td class="px-4 py-3 font-mono text-xs text-gold whitespace-nowrap">Mar 21 jul</td>
                   <td class="px-4 py-3"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-cinnabar/10 text-cinnabar px-2 py-0.5 rounded-full">Tren</span></td>
                   <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">~5,5–7 h</td>
                   <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">€30–88</td>
                   <td class="px-4 py-3 text-inksoft/55 text-xs">Vuelo con escala, poco práctico</td>
                 </tr>
-                <tr>
-                  <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">5</span>Zhangjiajie → Furong</td>
+                <tr data-tr="seg5" role="button" tabindex="0" title="Ver detalle del trayecto" class="tr-row">
+                  <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">5</span>Zhangjiajie → Furong <span class="tr-more">· Detalle ›</span></td>
                   <td class="px-4 py-3 font-mono text-xs text-gold whitespace-nowrap">Vie 24 jul</td>
                   <td class="px-4 py-3"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-cinnabar/10 text-cinnabar px-2 py-0.5 rounded-full">Tren</span></td>
                   <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">~30–45 min</td>
                   <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">€8–12</td>
                   <td class="px-4 py-3 text-inksoft/55 text-xs">Coche: ~2 h · €70–90/coche</td>
                 </tr>
-                <tr>
-                  <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">6</span>Furong → Shanghái</td>
+                <tr data-tr="seg6" role="button" tabindex="0" title="Ver detalle del trayecto" class="tr-row">
+                  <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">6</span>Furong → Shanghái <span class="tr-more">· Detalle ›</span></td>
                   <td class="px-4 py-3 font-mono text-xs text-gold whitespace-nowrap">Sáb 25 jul</td>
                   <td class="px-4 py-3"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-cinnabar/10 text-cinnabar px-2 py-0.5 rounded-full">Tren</span></td>
                   <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">~6 h 54 m</td>
@@ -332,6 +381,198 @@
   </section>
 
 
+
+  <!-- ===== Modal: detalle de transporte ===== -->
+  <div id="trModal" class="trm-ov" role="dialog" aria-modal="true" aria-label="Detalle del transporte">
+    <div class="trm-card" id="trCard" role="document"></div>
+  </div>
+  <script>
+    (function () {
+      var modal = document.getElementById('trModal');
+      var card = document.getElementById('trCard');
+      if (!modal || !card) return;
+
+      var REF = "1598738350622278";
+      var TR = {
+        ey1: {
+          kick: "Vuelo · EY112 · 8 jul", title: "Barcelona → Abu Dabi", status: "comprado",
+          dep: { t: "10:45", name: "Barcelona–El Prat (BCN), T1" }, arr: { t: "19:20", name: "Abu Dabi (AUH)" }, dur: "~7 h 35 m",
+          legs: [
+            { ic: "🚆", label: "Cómo llegar al aeropuerto", text: "Desde casa a <b>BCN T1</b> (Aerobús, Rodalies o coche). Por ser vuelo internacional, estad <b>3 h antes</b>." },
+            { ic: "🔁", label: "Conexión", text: "En <b>Abu Dabi (AUH)</b> enlazáis con el <b>EY888</b> a Pekín." }
+          ],
+          facts: [["Aerolínea", "Etihad Airways"], ["Pasajeros", "4 (2 ad + 2 niños)"], ["Reserva", REF], ["Tramo", "Ida 1 de 2"]],
+          note: "Primer tramo de la ida. El equipaje facturado va etiquetado hasta Pekín (PKX)."
+        },
+        ey2: {
+          kick: "Vuelo · EY888 · 8–9 jul", title: "Abu Dabi → Pekín (PKX)", status: "comprado",
+          dep: { t: "21:00", name: "Abu Dabi (AUH)" }, arr: { t: "09:00", name: "Pekín Daxing (PKX)", cn: "北京大兴" }, dur: "~8 h (llega 9 jul)",
+          legs: [
+            { ic: "🔁", label: "Conexión previa", text: "Llegáis en el <b>EY112</b> desde Barcelona." },
+            { ic: "🏨", label: "Del aeropuerto al hotel", text: "De <b>Pekín Daxing (PKX)</b> al <b>Holiday Inn Beijing Focus Square</b> (Wangjing, NE): <b>~1 h–1 h 15</b> en taxi/DiDi, o tren exprés Daxing + metro. PKX queda al sur de la ciudad." }
+          ],
+          facts: [["Aerolínea", "Etihad"], ["Llegada", "09:00 (9 jul)"], ["Tramo", "Ida 2 de 2"], ["Reserva", REF]],
+          note: "Aterrizáis la mañana del 9 jul: arranca el primer día en Pekín.",
+          actions: [{ label: "Ver día 1", href: "itinerario.html#dia-1", kind: "ghost" }]
+        },
+        eyint: {
+          kick: "Vuelo interno · EY5931 · 29 jul", title: "Shanghái (PVG) → Pekín (PKX)", status: "comprado",
+          dep: { t: "09:15", name: "Shanghái Pudong (PVG)", cn: "上海浦东" }, arr: { t: "11:20", name: "Pekín Daxing (PKX)", cn: "北京大兴" }, dur: "~3 h",
+          legs: [
+            { ic: "🏨", label: "Del hotel al aeropuerto", text: "Del <b>Holiday Inn Shanghai Nanjing Road</b> a <b>Pudong (PVG)</b>: <b>~45–60 min</b> en taxi/DiDi, o metro L2 + Maglev. Salid pronto." },
+            { ic: "🔁", label: "Enlace", text: "En <b>Pekín (PKX)</b> esperáis el <b>EY889</b> de vuelta (19:40). No hace falta salir del aeropuerto." }
+          ],
+          facts: [["Aerolínea", "Etihad"], ["Tramo", "Vuelo interno"], ["Reserva", REF]],
+          note: "Vuelo de enlace el último día para coger la vuelta internacional desde Pekín."
+        },
+        eyv1: {
+          kick: "Vuelo · EY889 · 29–30 jul", title: "Pekín (PKX) → Abu Dabi", status: "comprado",
+          dep: { t: "19:40", name: "Pekín Daxing (PKX)", cn: "北京大兴" }, arr: { t: "00:25", name: "Abu Dabi (AUH)" }, dur: "~8 h 45 m",
+          legs: [
+            { ic: "🛫", label: "En el aeropuerto", text: "Ya estáis en <b>PKX</b> desde el vuelo de la mañana (EY5931). Facturación de la vuelta por la tarde." },
+            { ic: "🔁", label: "Conexión", text: "En <b>Abu Dabi</b> enlazáis con el <b>EY111</b> a Barcelona." }
+          ],
+          facts: [["Aerolínea", "Etihad"], ["Tramo", "Vuelta 1 de 2"], ["Reserva", REF]],
+          note: "Salida la tarde-noche del 29 jul."
+        },
+        eyv2: {
+          kick: "Vuelo · EY111 · 30 jul", title: "Abu Dabi → Barcelona", status: "comprado",
+          dep: { t: "02:30", name: "Abu Dabi (AUH)" }, arr: { t: "07:35", name: "Barcelona–El Prat (BCN)" }, dur: "~7 h 50 m",
+          legs: [
+            { ic: "🔁", label: "Conexión previa", text: "Llegáis en el <b>EY889</b> desde Pekín." },
+            { ic: "🏠", label: "Llegada", text: "Aterrizáis en <b>Barcelona (BCN)</b> la mañana del 30 jul. Fin del viaje." }
+          ],
+          facts: [["Aerolínea", "Etihad"], ["Tramo", "Vuelta 2 de 2"], ["Reserva", REF]],
+          note: "¡De vuelta a casa! 🇪🇸"
+        },
+        seg1: {
+          kick: "Tren · 14 jul · alta velocidad", title: "Pekín → Xi'an", status: "comprado",
+          dep: { t: "12:55", name: "Pekín Oeste", cn: "北京西" }, arr: { t: "17:08", name: "Xi'an Norte", cn: "西安北" }, dur: "4 h 13 m",
+          legs: [
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Holiday Inn Beijing Focus Square</b> (Wangjing) a <b>Pekín Oeste</b>: <b>~50–60 min</b> en metro/taxi. Salid con margen: la estación es enorme." },
+            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Xi'an Norte</b> al <b>Gran Meliá Xi'an</b> (Qujiang): <b>~40–50 min</b> en metro/taxi." }
+          ],
+          facts: [["Precio", "253,46 € · 4 pax"], ["Reserva", "1598739297193102"], ["Plataforma", "Trip.com"], ["Distancia", "~1.150 km"]],
+          note: "Directo y al centro, sin traslados de aeropuerto. Único trayecto interno ya comprado.",
+          actions: [{ label: "Recibo PDF", href: "docs/billete-tren-1-pekin-xian-14jul.pdf", kind: "primary", blank: true }, { label: "Ver día 6", href: "itinerario.html#dia-6", kind: "ghost" }]
+        },
+        seg2: {
+          kick: "Tren · 16 jul · recomendado", title: "Xi'an → Chengdu", status: "pordecidir",
+          dep: { t: "—", name: "Xi'an Norte", cn: "西安北" }, arr: { t: "—", name: "Chengdu Este", cn: "成都东" }, dur: "~4 h",
+          legs: [
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Gran Meliá Xi'an</b> (Qujiang) a <b>Xi'an Norte</b>: <b>~40–50 min</b> en metro/taxi." },
+            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Chengdu Este</b> al <b>Ascott Raffles City Chengdu</b> (junto al metro): <b>~20–30 min</b>." }
+          ],
+          facts: [["Precio orient.", "€45–113/persona"], ["Estado", "Por comprar"], ["Distancia", "~660 km"], ["Clase", "2ª (alta velocidad)"]],
+          note: "Recomendado el <b>tren</b>. El vuelo es posible, pero más caro y peor puerta a puerta.",
+          actions: [{ label: "Ver día 8", href: "itinerario.html#dia-8", kind: "ghost" }]
+        },
+        seg3: {
+          kick: "Tren · 19 jul · recomendado", title: "Chengdu → Chongqing", status: "pordecidir",
+          dep: { t: "—", name: "Chengdu Este", cn: "成都东" }, arr: { t: "—", name: "Chongqing Norte", cn: "重庆北" }, dur: "~1 h 30 m",
+          legs: [
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del hotel de Chengdu a <b>Chengdu Este</b>: <b>~20–30 min</b> en metro/taxi." },
+            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Chongqing Norte</b> al <b>IntercityHotel Chongqing Jiefangbei</b>: <b>~30–50 min</b>. Las estaciones son enormes." }
+          ],
+          facts: [["Precio orient.", "€18–25/persona"], ["Estado", "Por comprar"], ["Distancia", "~300 km"], ["Clase", "2ª (alta velocidad)"]],
+          note: "El vuelo no compensa: aeropuertos lejos y trayecto cortísimo en tren.",
+          actions: [{ label: "Ver día 11", href: "itinerario.html#dia-11", kind: "ghost" }]
+        },
+        seg4: {
+          kick: "Tren · 21 jul · recomendado", title: "Chongqing → Zhangjiajie", status: "pordecidir",
+          dep: { t: "—", name: "Chongqing Norte/Oeste", cn: "重庆" }, arr: { t: "—", name: "Zhangjiajie Oeste", cn: "张家界西" }, dur: "~5,5–7 h",
+          legs: [
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>IntercityHotel</b> (Jiefangbei) a la estación: <b>~30–50 min</b>. Salid con tiempo." },
+            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Zhangjiajie Oeste</b> al <b>Avatar Mountain Resort</b> (Wulingyuan): <b>~40–50 min</b> en coche." }
+          ],
+          facts: [["Precio orient.", "€30–88/persona"], ["Estado", "Por comprar"], ["Distancia", "~580 km"], ["Clase", "2ª (alta velocidad)"]],
+          note: "Tramo largo. El vuelo va con escala y es poco práctico.",
+          actions: [{ label: "Ver día 13", href: "itinerario.html#dia-13", kind: "ghost" }]
+        },
+        seg5: {
+          kick: "Tren · 24 jul · recomendado", title: "Zhangjiajie → Furong", status: "pordecidir",
+          dep: { t: "—", name: "Zhangjiajie Oeste", cn: "张家界西" }, arr: { t: "—", name: "Furongzhen", cn: "芙蓉镇" }, dur: "~30–45 min",
+          legs: [
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Avatar Mountain Resort</b> (Wulingyuan) a <b>Zhangjiajie Oeste</b>: <b>~40–50 min</b> en coche." },
+            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Furongzhen</b> al <b>Annai · Xizhou Ji Hotel</b> (pueblo de Furong): <b>~10–15 min</b>." }
+          ],
+          facts: [["Precio orient.", "€8–12/persona"], ["Estado", "Por comprar"], ["Distancia", "~60 km"], ["Clase", "2ª (alta velocidad)"]],
+          note: "Tren rapidísimo. Alternativa: coche privado ~2 h · €70–90/coche.",
+          actions: [{ label: "Ver día 16", href: "itinerario.html#dia-16", kind: "ghost" }]
+        },
+        seg6: {
+          kick: "Tren G221 · 25 jul · directo", title: "Furong → Shanghái", status: "decidido",
+          dep: { t: "15:03", name: "Furongzhen", cn: "芙蓉镇" }, arr: { t: "21:57", name: "Shanghái Hongqiao", cn: "上海虹桥" }, dur: "6 h 54 m",
+          legs: [
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Annai · Xizhou Ji Hotel</b> (pueblo de Furong) a <b>Furongzhen</b>: <b>~10–15 min</b>." },
+            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Shanghái Hongqiao</b> al <b>Holiday Inn Shanghai Nanjing Road</b>: <b>~30–40 min</b> en metro L2 (+ corto taxi). Llegada de noche." }
+          ],
+          facts: [["Precio orient.", "€95–110/persona (2ª)"], ["Estado", "Decidido · sin comprar"], ["Distancia", "~1.450 km"], ["Tren", "G221 directo"]],
+          note: "Directo y sin transbordos: el broche moderno del viaje. Está decidido el tren directo G221.",
+          actions: [{ label: "Horarios y billetes G221", href: "https://us.trip.com/trains/china/route/furongzhen-to-shanghai-hongqiao/", kind: "primary", blank: true }, { label: "Ver día 17", href: "itinerario.html#dia-17", kind: "ghost" }]
+        }
+      };
+
+      var BADGE = { comprado: "✓ Comprado", decidido: "✓ Decidido · sin comprar", pordecidir: "◷ Por decidir" };
+
+      function esc(s) { return s == null ? "" : String(s); }
+      function stop(s, right) {
+        return '<div class="trm-stop"' + (right ? ' style="text-align:right;"' : '') + '><div class="t">' + esc(s.t) +
+          '</div><div class="p">' + esc(s.name) + (s.cn ? ' <span class="c">' + s.cn + '</span>' : '') + '</div></div>';
+      }
+      function build(t) {
+        var h = '';
+        h += '<div class="trm-head"><button class="trm-x" data-trclose aria-label="Cerrar">&times;</button>';
+        h += '<p class="trm-kick">' + esc(t.kick) + '</p>';
+        h += '<h3 class="trm-title">' + esc(t.title) + '</h3>';
+        h += '<span class="trm-badge b-' + t.status + '">' + BADGE[t.status] + '</span></div>';
+        h += '<div class="trm-body">';
+        h += '<div class="trm-route">' + stop(t.dep) + '<div class="trm-arrow"><span style="font-size:1.15rem;line-height:1;">→</span><span class="d">' + esc(t.dur) + '</span></div>' + stop(t.arr, true) + '</div>';
+        (t.legs || []).forEach(function (l) {
+          h += '<div class="trm-sec"><p class="trm-lbl">' + l.ic + ' ' + esc(l.label) + '</p><p class="trm-leg-tx">' + l.text + '</p></div>';
+        });
+        if (t.facts && t.facts.length) {
+          h += '<div class="trm-sec"><div class="trm-grid">';
+          t.facts.forEach(function (f) { h += '<div class="trm-kv"><div class="k">' + esc(f[0]) + '</div><div class="v">' + esc(f[1]) + '</div></div>'; });
+          h += '</div></div>';
+        }
+        if (t.note) h += '<div class="trm-note">' + t.note + '</div>';
+        if (t.actions && t.actions.length) {
+          h += '<div class="trm-actions">';
+          t.actions.forEach(function (a) {
+            h += '<a class="trm-btn ' + (a.kind || 'ghost') + '" href="' + a.href + '"' + (a.blank ? ' target="_blank" rel="noopener"' : '') + '>' + esc(a.label) + '</a>';
+          });
+          h += '</div>';
+        }
+        h += '</div>';
+        return h;
+      }
+      var lastFocus = null;
+      function open(id) {
+        var t = TR[id]; if (!t) return;
+        lastFocus = document.activeElement;
+        card.innerHTML = build(t);
+        modal.classList.add('open');
+        document.documentElement.style.overflow = 'hidden';
+        card.scrollTop = 0;
+        var x = card.querySelector('[data-trclose]'); if (x) x.focus();
+      }
+      function close() {
+        modal.classList.remove('open');
+        document.documentElement.style.overflow = '';
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      }
+      document.querySelectorAll('[data-tr]').forEach(function (el) {
+        el.addEventListener('click', function () { open(el.getAttribute('data-tr')); });
+        el.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(el.getAttribute('data-tr')); }
+        });
+      });
+      modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+      card.addEventListener('click', function (e) { if (e.target.closest('[data-trclose]')) close(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) close(); });
+    })();
+  </script>
 
   <footer class="bg-ink text-paper/70">
     <div class="max-w-6xl mx-auto px-6 py-12 flex flex-col sm:flex-row items-center justify-between gap-4">

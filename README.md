@@ -6,7 +6,7 @@ Web del viaje familiar a China (julio 2026). Sitio **estático multipágina**, s
 - `index.html` — Inicio: portada + resumen de la ruta.
 - `itinerario.html` — Itinerario día a día (21 jornadas, con anclas `#dia-N`).
 - `hoteles.html` — Hoteles por ciudad (Pekín y Xi'an reservados; el resto, ejemplos por confirmar).
-- `logistica.html` — Mapa interactivo + transporte interno.
+- `transportes.html` — Mapa interactivo + vuelos, trenes y trayectos internos (detalle en popup).
 - `preparativos.html` — Checklist con progreso guardado en el navegador.
 
 Todas comparten cabecera, menú móvil, pie y el popup **"¿dónde estamos?"** (calcula la etapa actual según la fecha, en hora de China).
