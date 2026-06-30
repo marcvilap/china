@@ -139,6 +139,8 @@
     .trm-btn.primary:hover{background:#7E261E;}
     .trm-btn.ghost{background:transparent;border:1px solid rgba(140,90,60,.4);color:#8C5A3C;}
     .trm-btn.ghost:hover{border-color:#A8362B;color:#A8362B;}
+    .trm-map{border-radius:12px;overflow:hidden;border:1px solid rgba(140,90,60,.2);background:#EAE2D2;}
+    .trm-map iframe{width:100%;height:230px;border:0;display:block;}
 
         @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -452,6 +454,10 @@
             { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Holiday Inn Beijing Focus Square</b> (Wangjing, en 阜通东大街) a <b>Pekín Oeste / Beijing West (北京西站)</b>, ~22 km cruzando la ciudad de NE a SO.<br><br><b>🚕 Taxi/DiDi</b> (lo más cómodo con maletas): ~40–60 min según tráfico.<br><br><b>🚇 Metro</b> (~65–75 min, 1 transbordo):<br>1) <b>Línea 14</b> en <b>Futong (阜通)</b>, en la misma calle del hotel (~5 min a pie), sentido Zhangguozhuang (张郭庄) → <b>9 paradas</b> hasta <b>Jiulongshan (九龙山)</b>.<br>2) Transbordo a <b>Línea 7</b> sentido Beijing West → <b>12 paradas</b> hasta el final, <b>北京西站</b>.<br>Salid con margen: la estación es enorme y el control de equipaje lleva tiempo." },
             { ic: "🚉", label: "De la estación al hotel", text: "De <b>Xi'an Norte</b> al <b>Gran Meliá Xi'an</b> (Qujiang): <b>~40–50 min</b> en metro/taxi." }
           ],
+          gmaps: {
+            embed: "https://maps.google.com/maps?saddr=Holiday%20Inn%20Beijing%20Focus%20Square%2C%20Wangjing%2C%20Beijing&daddr=Beijing%20West%20Railway%20Station%2C%20Beijing&dirflg=r&output=embed",
+            link: "https://www.google.com/maps/dir/?api=1&origin=Holiday%20Inn%20Beijing%20Focus%20Square%2C%20Wangjing%2C%20Beijing&destination=Beijing%20West%20Railway%20Station%2C%20Beijing&travelmode=transit"
+          },
           facts: [["Precio", "253,46 € · 4 pax"], ["Reserva", "1598739297193102"], ["Plataforma", "Trip.com"], ["Distancia", "~1.150 km"]],
           note: "Directo y al centro, sin traslados de aeropuerto. Único trayecto interno ya comprado.",
           actions: [{ label: "Recibo PDF", href: "docs/billete-tren-1-pekin-xian-14jul.pdf", kind: "primary", blank: true }, { label: "Ver día 6", href: "itinerario.html#dia-6", kind: "ghost" }]
@@ -531,6 +537,11 @@
         (t.legs || []).forEach(function (l) {
           h += '<div class="trm-sec"><p class="trm-lbl">' + l.ic + ' ' + esc(l.label) + '</p><p class="trm-leg-tx">' + l.text + '</p></div>';
         });
+        if (t.gmaps) {
+          h += '<div class="trm-sec"><p class="trm-lbl">🗺️ Ruta en Google Maps</p>';
+          h += '<div class="trm-map"><iframe src="' + t.gmaps.embed + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ruta en Google Maps"></iframe></div>';
+          h += '<a class="trm-btn ghost" style="margin-top:10px;" href="' + t.gmaps.link + '" target="_blank" rel="noopener">Abrir ruta en Google Maps ↗</a></div>';
+        }
         if (t.facts && t.facts.length) {
           h += '<div class="trm-sec"><div class="trm-grid">';
           t.facts.forEach(function (f) { h += '<div class="trm-kv"><div class="k">' + esc(f[0]) + '</div><div class="v">' + esc(f[1]) + '</div></div>'; });
