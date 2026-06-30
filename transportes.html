@@ -453,13 +453,15 @@
           kick: "Tren · 14 jul · alta velocidad", title: "Pekín → Xi'an", status: "comprado",
           dep: { t: "12:55", name: "Pekín Oeste", cn: "北京西" }, arr: { t: "17:08", name: "Xi'an Norte", cn: "西安北" }, dur: "4 h 13 m",
           legs: [
-            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Holiday Inn Beijing Focus Square</b> (Wangjing, en 阜通东大街) a <b>Pekín Oeste / Beijing West (北京西站)</b>, ~22 km cruzando la ciudad de NE a SO.<br><br><b>🚕 Taxi/DiDi</b> (lo más cómodo con maletas): ~40–60 min según tráfico.<br><br><b>🚇 Metro</b> (~65–75 min, 1 transbordo):<br>1) <b>Línea 14</b> en <b>Futong (阜通)</b>, en la misma calle del hotel (~5 min a pie), sentido Zhangguozhuang (张郭庄) → <b>9 paradas</b> hasta <b>Jiulongshan (九龙山)</b>.<br>2) Transbordo a <b>Línea 7</b> sentido Beijing West → <b>12 paradas</b> hasta el final, <b>北京西站</b>.<br>Salid con margen: la estación es enorme y el control de equipaje lleva tiempo." },
-            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Xi'an Norte</b> al <b>Gran Meliá Xi'an</b> (Qujiang): <b>~40–50 min</b> en metro/taxi." }
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Holiday Inn Beijing Focus Square</b> (Wangjing, en 阜通东大街) a <b>Pekín Oeste / Beijing West (北京西站)</b>, ~22 km cruzando la ciudad de NE a SO.<br><br><b>🚕 Taxi/DiDi</b> (lo más cómodo con maletas): ~40–60 min según tráfico.<br><br><b>🚇 Metro</b> (~65–75 min, 1 transbordo):<br>1) <b>Línea 14</b> en <b>Futong (阜通)</b>, en la misma calle del hotel (~5 min a pie), sentido Zhangguozhuang (张郭庄) → <b>9 paradas</b> hasta <b>Jiulongshan (九龙山)</b>.<br>2) Transbordo a <b>Línea 7</b> sentido Beijing West → <b>12 paradas</b> hasta el final, <b>北京西站</b>.<br>Salid con margen: la estación es enorme y el control de equipaje lleva tiempo.", gmaps: {
+              embed: "https://maps.google.com/maps?saddr=Holiday%20Inn%20Beijing%20Focus%20Square%2C%20Wangjing%2C%20Beijing&daddr=Beijing%20West%20Railway%20Station%2C%20Beijing&dirflg=r&output=embed",
+              link: "https://www.google.com/maps/dir/?api=1&origin=Holiday%20Inn%20Beijing%20Focus%20Square%2C%20Wangjing%2C%20Beijing&destination=Beijing%20West%20Railway%20Station%2C%20Beijing&travelmode=transit"
+            } },
+            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Xi'an Norte (西安北站)</b> al <b>Gran Meliá Xi'an</b> (Qujiang): <b>~40–50 min</b> en metro/taxi.", gmaps: {
+              embed: "https://maps.google.com/maps?saddr=Xian%20North%20Railway%20Station&daddr=Gran%20Melia%20Xian%2C%20Qujiang&dirflg=r&output=embed",
+              link: "https://www.google.com/maps/dir/?api=1&origin=Xian%20North%20Railway%20Station&destination=Gran%20Melia%20Xian%2C%20Qujiang&travelmode=transit"
+            } }
           ],
-          gmaps: {
-            embed: "https://maps.google.com/maps?saddr=Holiday%20Inn%20Beijing%20Focus%20Square%2C%20Wangjing%2C%20Beijing&daddr=Beijing%20West%20Railway%20Station%2C%20Beijing&dirflg=r&output=embed",
-            link: "https://www.google.com/maps/dir/?api=1&origin=Holiday%20Inn%20Beijing%20Focus%20Square%2C%20Wangjing%2C%20Beijing&destination=Beijing%20West%20Railway%20Station%2C%20Beijing&travelmode=transit"
-          },
           facts: [["Precio", "253,46 € · 4 pax"], ["Reserva", "1598739297193102"], ["Plataforma", "Trip.com"], ["Distancia", "~1.150 km"]],
           note: "Directo y al centro, sin traslados de aeropuerto. Único trayecto interno ya comprado.",
           actions: [{ label: "Recibo PDF", href: "docs/billete-tren-1-pekin-xian-14jul.pdf", kind: "primary", blank: true }, { label: "Ver día 6", href: "itinerario.html#dia-6", kind: "ghost" }]
@@ -537,14 +539,14 @@
         h += '<div class="trm-body">';
         h += '<div class="trm-route">' + stop(t.dep) + '<div class="trm-arrow"><span style="font-size:1.15rem;line-height:1;">→</span><span class="d">' + esc(t.dur) + '</span></div>' + stop(t.arr, true) + '</div>';
         (t.legs || []).forEach(function (l) {
-          h += '<div class="trm-sec"><p class="trm-lbl">' + l.ic + ' ' + esc(l.label) + '</p><p class="trm-leg-tx">' + l.text + '</p></div>';
+          h += '<div class="trm-sec"><p class="trm-lbl">' + l.ic + ' ' + esc(l.label) + '</p><p class="trm-leg-tx">' + l.text + '</p>';
+          if (l.gmaps) {
+            h += '<div class="trm-map" style="margin-top:10px;"><iframe src="' + l.gmaps.embed + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ruta en Google Maps"></iframe></div>';
+            h += '<a class="trm-btn ghost" style="margin-top:9px;" href="' + l.gmaps.link + '" target="_blank" rel="noopener">Abrir en Google Maps ↗</a>';
+          }
+          h += '</div>';
         });
-        if (t.gmaps) {
-          h += '<div class="trm-sec"><p class="trm-lbl">🗺️ Ruta en Google Maps</p>';
-          h += '<div class="trm-map"><iframe src="' + t.gmaps.embed + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ruta en Google Maps"></iframe></div>';
-          h += '<a class="trm-btn ghost" style="margin-top:10px;" href="' + t.gmaps.link + '" target="_blank" rel="noopener">Abrir ruta en Google Maps ↗</a></div>';
-        }
-        else if (t.pending) {
+        if (t.pending) {
           h += '<div class="trm-sec"><div class="trm-pending">🚧 <b>Ruta detallada pendiente.</b> Añadiremos el mapa de Google Maps y el trayecto exacto hotel ↔ estación cuando se decida o se compre este tren.</div></div>';
         }
         if (t.facts && t.facts.length) {
