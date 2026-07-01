@@ -116,6 +116,7 @@
     .trm-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 11px;border-radius:999px;margin-top:11px;}
     .b-comprado{background:rgba(63,107,87,.3);color:#A9D9C2;}
     .b-decidido{background:rgba(194,146,47,.26);color:#EBC472;}
+    .b-prerreservado{background:rgba(194,146,47,.24);color:#EBC472;}
     .b-pordecidir{background:rgba(244,238,225,.16);color:#E8D7C4;}
     .trm-body{padding:18px 20px 22px;}
     .trm-route{display:flex;align-items:center;gap:12px;background:#FBF7EE;border:1px solid rgba(140,90,60,.18);border-radius:14px;padding:14px 16px;}
@@ -195,7 +196,7 @@
     <div class="mb-12">
       <p class="font-mono text-xs uppercase tracking-[0.3em] text-cinnabar mb-3">交通 · Cómo nos movemos</p>
       <h2 class="font-display text-4xl md:text-5xl font-600 tracking-tight">Transportes</h2>
-      <p class="mt-4 text-inksoft/70 text-sm md:text-base leading-relaxed max-w-2xl">Vuelos, trenes y trayectos internos del viaje. <span class="text-ink/80">Pulsa cualquier transporte</span> para ver el detalle: de dónde sale, el trayecto del hotel a la estación o aeropuerto, horarios y estado (comprado, decidido o por decidir).</p>
+      <p class="mt-4 text-inksoft/70 text-sm md:text-base leading-relaxed max-w-2xl">Vuelos, trenes y trayectos internos del viaje. <span class="text-ink/80">Pulsa cualquier transporte</span> para ver el detalle: de dónde sale, el trayecto del hotel a la estación o aeropuerto, horarios y estado (comprado, prerreservado o por decidir).</p>
     </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
@@ -317,9 +318,9 @@
                   <th class="font-400 px-4 py-3">Tramo</th>
                   <th class="font-400 px-4 py-3">Fecha</th>
                   <th class="font-400 px-4 py-3">Recomendado</th>
-                  <th class="font-400 px-4 py-3">Tiempo</th>
-                  <th class="font-400 px-4 py-3">€ / persona</th>
-                  <th class="font-400 px-4 py-3">Alternativa</th>
+                  <th class="font-400 px-4 py-3">Horario</th>
+                  <th class="font-400 px-4 py-3">Precio · 4 pax</th>
+                  <th class="font-400 px-4 py-3">Estado</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-clay/12">
@@ -328,55 +329,55 @@
                   <td class="px-4 py-3 font-mono text-xs text-gold whitespace-nowrap">Mar 14 jul</td>
                   <td class="px-4 py-3"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-cinnabar/10 text-cinnabar px-2 py-0.5 rounded-full">Tren</span></td>
                   <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">12:55→17:08</td>
-                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">328,44 € (4 pax)</td>
+                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">328,44 €</td>
                   <td class="px-4 py-3 text-inksoft/55 text-xs"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-jade/15 text-jade px-2 py-0.5 rounded-full">&#10003; Comprado</span> <a href="docs/billete-tren-1-pekin-xian-14jul.pdf" target="_blank" rel="noopener" class="text-cinnabar underline hover:text-cinnabarDark">Recibo PDF</a></td>
                 </tr>
                 <tr data-tr="seg2" role="button" tabindex="0" title="Ver detalle del trayecto" class="tr-row">
                   <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">2</span>Xi'an → Chengdu <span class="tr-more">· Detalle ›</span></td>
                   <td class="px-4 py-3 font-mono text-xs text-gold whitespace-nowrap">Jue 16 jul</td>
                   <td class="px-4 py-3"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-cinnabar/10 text-cinnabar px-2 py-0.5 rounded-full">Tren</span></td>
-                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">~4 h</td>
-                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">€45–113</td>
-                  <td class="px-4 py-3 text-inksoft/55 text-xs">Vuelo posible (más caro)</td>
+                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">11:30→14:58</td>
+                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">167,16 €</td>
+                  <td class="px-4 py-3 text-inksoft/55 text-xs"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-gold/15 text-gold px-2 py-0.5 rounded-full">&#9719; Prerreservado</span> <span class="text-inksoft/45">emisión ~2 jul</span></td>
                 </tr>
                 <tr data-tr="seg3" role="button" tabindex="0" title="Ver detalle del trayecto" class="tr-row">
                   <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">3</span>Chengdu → Chongqing <span class="tr-more">· Detalle ›</span></td>
                   <td class="px-4 py-3 font-mono text-xs text-gold whitespace-nowrap">Dom 19 jul</td>
                   <td class="px-4 py-3"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-cinnabar/10 text-cinnabar px-2 py-0.5 rounded-full">Tren</span></td>
-                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">~1,5 h</td>
-                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">€18–25</td>
-                  <td class="px-4 py-3 text-inksoft/55 text-xs">Vuelo no compensa (aeropuertos lejos)</td>
+                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">10:50→12:52</td>
+                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">64,72 €</td>
+                  <td class="px-4 py-3 text-inksoft/55 text-xs"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-gold/15 text-gold px-2 py-0.5 rounded-full">&#9719; Prerreservado</span> <span class="text-inksoft/45">emisión ~5 jul</span></td>
                 </tr>
                 <tr data-tr="seg4" role="button" tabindex="0" title="Ver detalle del trayecto" class="tr-row">
                   <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">4</span>Chongqing → Zhangjiajie <span class="tr-more">· Detalle ›</span></td>
                   <td class="px-4 py-3 font-mono text-xs text-gold whitespace-nowrap">Mar 21 jul</td>
                   <td class="px-4 py-3"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-cinnabar/10 text-cinnabar px-2 py-0.5 rounded-full">Tren</span></td>
-                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">~5,5–7 h</td>
-                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">€30–88</td>
-                  <td class="px-4 py-3 text-inksoft/55 text-xs">Vuelo con escala, poco práctico</td>
+                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">10:40→13:22</td>
+                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">130,24 €</td>
+                  <td class="px-4 py-3 text-inksoft/55 text-xs"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-gold/15 text-gold px-2 py-0.5 rounded-full">&#9719; Prerreservado</span> <span class="text-inksoft/45">emisión ~7 jul</span></td>
                 </tr>
                 <tr data-tr="seg5" role="button" tabindex="0" title="Ver detalle del trayecto" class="tr-row">
                   <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">5</span>Zhangjiajie → Furong <span class="tr-more">· Detalle ›</span></td>
                   <td class="px-4 py-3 font-mono text-xs text-gold whitespace-nowrap">Vie 24 jul</td>
                   <td class="px-4 py-3"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-cinnabar/10 text-cinnabar px-2 py-0.5 rounded-full">Tren</span></td>
-                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">~30–45 min</td>
-                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">€8–12</td>
-                  <td class="px-4 py-3 text-inksoft/55 text-xs">Coche: ~2 h · €70–90/coche</td>
+                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">17:45→18:08</td>
+                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">28,68 €</td>
+                  <td class="px-4 py-3 text-inksoft/55 text-xs"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-gold/15 text-gold px-2 py-0.5 rounded-full">&#9719; Prerreservado</span> <span class="text-inksoft/45">emisión ~10 jul</span></td>
                 </tr>
                 <tr data-tr="seg6" role="button" tabindex="0" title="Ver detalle del trayecto" class="tr-row">
                   <td class="px-4 py-3"><span class="font-mono text-xs text-clay mr-2">6</span>Furong → Shanghái <span class="tr-more">· Detalle ›</span></td>
                   <td class="px-4 py-3 font-mono text-xs text-gold whitespace-nowrap">Sáb 25 jul</td>
                   <td class="px-4 py-3"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-cinnabar/10 text-cinnabar px-2 py-0.5 rounded-full">Tren</span></td>
-                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">~6 h 54 m</td>
-                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">€95–110</td>
-                  <td class="px-4 py-3 text-inksoft/55 text-xs">Directo <a href="https://us.trip.com/trains/china/route/furongzhen-to-shanghai-hongqiao/" target="_blank" rel="noopener" class="text-cinnabar underline hover:text-cinnabarDark">G221</a> (15:03→21:57). Vuelo: ~2 h 10 · €120–250</td>
+                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">15:03→21:57</td>
+                  <td class="px-4 py-3 font-mono text-inksoft/80 whitespace-nowrap">413,72 €</td>
+                  <td class="px-4 py-3 text-inksoft/55 text-xs"><span class="font-mono text-[0.7rem] uppercase tracking-wider bg-gold/15 text-gold px-2 py-0.5 rounded-full">&#9719; Prerreservado</span> <span class="text-inksoft/45">emisión ~11 jul</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
         <p class="text-xs text-inksoft/55 mt-3 leading-relaxed">
-          Precios orientativos de ida, por persona, en temporada alta (julio); 2ª clase en tren y clase turista en avión. Los <strong>niños menores de 14 años pagan ~50 %</strong> en tren. Para la familia (2 adultos + 2 niños), el tren sale &asymp; &times;3 y el vuelo &asymp; &times;3,5–4. Conviene reservar con antelación en verano. Los vuelos internacionales (Etihad) están arriba.
+          <strong>Precios reales pagados</strong> para la familia (2 adultos + 2 niños), 2ª clase, en prerreserva por Trip.com. El tren 1 (Pekín→Xi'an) ya está <strong>comprado y emitido</strong>; los trenes 2–6 están <strong>prerreservados</strong>: Trip.com emite los billetes automáticamente en cuanto abre la venta (fechas de emisión indicadas en cada fila) y, si no hubiera plazas, reembolsa. Total de los 6 trenes internos: <strong>1.132,96 €</strong>. Los vuelos internacionales (Etihad) están arriba.
         </p>
       </div>
 
@@ -468,63 +469,63 @@
           actions: [{ label: "Recibo PDF", href: "docs/billete-tren-1-pekin-xian-14jul.pdf", kind: "primary", blank: true }, { label: "Ver día 6", href: "itinerario.html#dia-6", kind: "ghost" }]
         },
         seg2: {
-          kick: "Tren · 16 jul · recomendado", title: "Xi'an → Chengdu", status: "pordecidir", pending: true,
-          dep: { t: "—", name: "Xi'an Norte", cn: "西安北" }, arr: { t: "—", name: "Chengdu Este", cn: "成都东" }, dur: "~4 h",
+          kick: "Tren G1839 · 16 jul · prerreservado", title: "Xi'an → Chengdu", status: "prerreservado", pending: true,
+          dep: { t: "11:30", name: "Xi'an Norte", cn: "西安北" }, arr: { t: "14:58", name: "Chengdu Este", cn: "成都东" }, dur: "3 h 28 m",
           legs: [
             { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Gran Meliá Xi'an</b> (Qujiang) a <b>Xi'an Norte</b>: <b>~40–50 min</b> en metro/taxi." },
             { ic: "🚉", label: "De la estación al hotel", text: "De <b>Chengdu Este</b> al <b>Ascott Raffles City Chengdu</b> (junto al metro): <b>~20–30 min</b>." }
           ],
-          facts: [["Precio orient.", "€45–113/persona"], ["Estado", "Por comprar"], ["Distancia", "~660 km"], ["Clase", "2ª (alta velocidad)"]],
-          note: "Recomendado el <b>tren</b>. El vuelo es posible, pero más caro y peor puerta a puerta.",
+          facts: [["Tren", "G1839 · 2ª clase"], ["Precio", "167,16 € · 4 pax"], ["Reserva", "1598740030699273"], ["Estado", "Prerreservado"], ["Emisión", "~2 jul"], ["Distancia", "~660 km"]],
+          note: "Prerreserva pagada en Trip.com: los billetes se emiten automáticamente al abrir la venta (~2 jul); si no quedaran plazas, se reembolsa. El vuelo es posible, pero más caro y peor puerta a puerta.",
           actions: [{ label: "Ver día 8", href: "itinerario.html#dia-8", kind: "ghost" }]
         },
         seg3: {
-          kick: "Tren · 19 jul · recomendado", title: "Chengdu → Chongqing", status: "pordecidir", pending: true,
-          dep: { t: "—", name: "Chengdu Este", cn: "成都东" }, arr: { t: "—", name: "Chongqing Norte", cn: "重庆北" }, dur: "~1 h 30 m",
+          kick: "Tren D368 · 19 jul · prerreservado", title: "Chengdu → Chongqing", status: "prerreservado", pending: true,
+          dep: { t: "10:50", name: "Chengdu Este", cn: "成都东" }, arr: { t: "12:52", name: "Chongqing Norte", cn: "重庆北" }, dur: "2 h 2 m",
           legs: [
             { ic: "🏨", label: "Del hotel a la estación", text: "Del hotel de Chengdu a <b>Chengdu Este</b>: <b>~20–30 min</b> en metro/taxi." },
             { ic: "🚉", label: "De la estación al hotel", text: "De <b>Chongqing Norte</b> al <b>IntercityHotel Chongqing Jiefangbei</b>: <b>~30–50 min</b>. Las estaciones son enormes." }
           ],
-          facts: [["Precio orient.", "€18–25/persona"], ["Estado", "Por comprar"], ["Distancia", "~300 km"], ["Clase", "2ª (alta velocidad)"]],
-          note: "El vuelo no compensa: aeropuertos lejos y trayecto cortísimo en tren.",
+          facts: [["Tren", "D368 · 2ª clase"], ["Precio", "64,72 € · 4 pax"], ["Reserva", "1598740030740655"], ["Estado", "Prerreservado"], ["Emisión", "~5 jul"], ["Distancia", "~300 km"]],
+          note: "Prerreserva pagada en Trip.com: los billetes se emiten automáticamente al abrir la venta (~5 jul); si no quedaran plazas, se reembolsa. El vuelo no compensa: aeropuertos lejos y trayecto cortísimo en tren.",
           actions: [{ label: "Ver día 11", href: "itinerario.html#dia-11", kind: "ghost" }]
         },
         seg4: {
-          kick: "Tren · 21 jul · recomendado", title: "Chongqing → Zhangjiajie", status: "pordecidir", pending: true,
-          dep: { t: "—", name: "Chongqing Norte/Oeste", cn: "重庆" }, arr: { t: "—", name: "Zhangjiajie Oeste", cn: "张家界西" }, dur: "~5,5–7 h",
+          kick: "Tren G1473 · 21 jul · prerreservado", title: "Chongqing → Zhangjiajie", status: "prerreservado", pending: true,
+          dep: { t: "10:40", name: "Chongqing Este", cn: "重庆东" }, arr: { t: "13:22", name: "Zhangjiajie Oeste", cn: "张家界西" }, dur: "2 h 42 m",
           legs: [
-            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>IntercityHotel</b> (Jiefangbei) a la estación: <b>~30–50 min</b>. Salid con tiempo." },
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>IntercityHotel</b> (Jiefangbei) a <b>Chongqing Este (重庆东)</b>: <b>~30–50 min</b>. Ojo: salís de <b>Chongqing Este</b>, no de Chongqing Norte (donde llegasteis el día 11). Salid con tiempo." },
             { ic: "🚉", label: "De la estación al hotel", text: "De <b>Zhangjiajie Oeste</b> al <b>Avatar Mountain Resort</b> (Wulingyuan): <b>~40–50 min</b> en coche." }
           ],
-          facts: [["Precio orient.", "€30–88/persona"], ["Estado", "Por comprar"], ["Distancia", "~580 km"], ["Clase", "2ª (alta velocidad)"]],
-          note: "Tramo largo. El vuelo va con escala y es poco práctico.",
+          facts: [["Tren", "G1473 · 2ª clase"], ["Precio", "130,24 € · 4 pax"], ["Reserva", "1598740030837273"], ["Estado", "Prerreservado"], ["Emisión", "~7 jul"], ["Distancia", "~580 km"]],
+          note: "Prerreserva pagada en Trip.com: los billetes se emiten automáticamente al abrir la venta (~7 jul); si no quedaran plazas, se reembolsa. Tren directo de alta velocidad (2 h 42 m); el vuelo va con escala y es poco práctico.",
           actions: [{ label: "Ver día 13", href: "itinerario.html#dia-13", kind: "ghost" }]
         },
         seg5: {
-          kick: "Tren · 24 jul · recomendado", title: "Zhangjiajie → Furong", status: "pordecidir", pending: true,
-          dep: { t: "—", name: "Zhangjiajie Oeste", cn: "张家界西" }, arr: { t: "—", name: "Furongzhen", cn: "芙蓉镇" }, dur: "~30–45 min",
+          kick: "Tren G6167 · 24 jul · prerreservado", title: "Zhangjiajie → Furong", status: "prerreservado", pending: true,
+          dep: { t: "17:45", name: "Zhangjiajie Oeste", cn: "张家界西" }, arr: { t: "18:08", name: "Furongzhen", cn: "芙蓉镇" }, dur: "23 min",
           legs: [
             { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Avatar Mountain Resort</b> (Wulingyuan) a <b>Zhangjiajie Oeste</b>: <b>~40–50 min</b> en coche." },
             { ic: "🚉", label: "De la estación al hotel", text: "De <b>Furongzhen</b> al <b>Annai · Xizhou Ji Hotel</b> (pueblo de Furong): <b>~10–15 min</b>." }
           ],
-          facts: [["Precio orient.", "€8–12/persona"], ["Estado", "Por comprar"], ["Distancia", "~60 km"], ["Clase", "2ª (alta velocidad)"]],
-          note: "Tren rapidísimo. Alternativa: coche privado ~2 h · €70–90/coche.",
+          facts: [["Tren", "G6167 · 2ª clase"], ["Precio", "28,68 € · 4 pax"], ["Reserva", "1598740030867880"], ["Estado", "Prerreservado"], ["Emisión", "~10 jul"], ["Distancia", "~60 km"]],
+          note: "Prerreserva pagada en Trip.com: los billetes se emiten automáticamente al abrir la venta (~10 jul); si no quedaran plazas, se reembolsa. Tren rapidísimo (23 min). Alternativa: coche privado ~2 h · €70–90/coche.",
           actions: [{ label: "Ver día 16", href: "itinerario.html#dia-16", kind: "ghost" }]
         },
         seg6: {
-          kick: "Tren G221 · 25 jul · directo", title: "Furong → Shanghái", status: "decidido", pending: true,
+          kick: "Tren G221 · 25 jul · prerreservado", title: "Furong → Shanghái", status: "prerreservado", pending: true,
           dep: { t: "15:03", name: "Furongzhen", cn: "芙蓉镇" }, arr: { t: "21:57", name: "Shanghái Hongqiao", cn: "上海虹桥" }, dur: "6 h 54 m",
           legs: [
             { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Annai · Xizhou Ji Hotel</b> (pueblo de Furong) a <b>Furongzhen</b>: <b>~10–15 min</b>." },
             { ic: "🚉", label: "De la estación al hotel", text: "De <b>Shanghái Hongqiao</b> al <b>Holiday Inn Shanghai Nanjing Road</b>: <b>~30–40 min</b> en metro L2 (+ corto taxi). Llegada de noche." }
           ],
-          facts: [["Precio orient.", "€95–110/persona (2ª)"], ["Estado", "Decidido · sin comprar"], ["Distancia", "~1.450 km"], ["Tren", "G221 directo"]],
-          note: "Directo y sin transbordos: el broche moderno del viaje. Está decidido el tren directo G221.",
+          facts: [["Tren", "G221 · 2ª clase · directo"], ["Precio", "413,72 € · 4 pax"], ["Reserva", "1598740030930582"], ["Estado", "Prerreservado"], ["Emisión", "~11 jul"], ["Distancia", "~1.450 km"]],
+          note: "Prerreserva pagada en Trip.com: los billetes se emiten automáticamente al abrir la venta (~11 jul); si no quedaran plazas, se reembolsa. Directo y sin transbordos: el broche moderno del viaje.",
           actions: [{ label: "Horarios y billetes G221", href: "https://us.trip.com/trains/china/route/furongzhen-to-shanghai-hongqiao/", kind: "primary", blank: true }, { label: "Ver día 17", href: "itinerario.html#dia-17", kind: "ghost" }]
         }
       };
 
-      var BADGE = { comprado: "✓ Comprado", decidido: "✓ Decidido · sin comprar", pordecidir: "◷ Por decidir" };
+      var BADGE = { comprado: "✓ Comprado", decidido: "✓ Decidido · sin comprar", prerreservado: "◷ Prerreservado · esperando venta", pordecidir: "◷ Por decidir" };
 
       function esc(s) { return s == null ? "" : String(s); }
       function stop(s, right) {
