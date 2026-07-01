@@ -111,6 +111,13 @@
     .jg-diploma{ border:2px solid rgba(194,146,47,.6); border-radius:16px; padding:2rem 1.5rem; text-align:center; background:
       radial-gradient(circle at 50% 0%, rgba(194,146,47,.14), transparent 60%), var(--cream); }
 
+    /* Super regalo */
+    .jg-reward{ margin-top:1.5rem; padding-top:1.4rem; border-top:1px dashed rgba(140,90,60,.3); }
+    .jg-reward-tag{ display:inline-block; font-family:'Space Mono',monospace; font-size:.62rem; text-transform:uppercase; letter-spacing:.2em; color:var(--gold); }
+    .jg-reward-title{ font-family:'Fraunces',serif; font-weight:700; font-size:1.35rem; line-height:1.15; color:var(--ink); margin-top:.3rem; }
+    .jg-reward img{ display:block; width:100%; max-width:440px; margin:1rem auto 0; border-radius:16px; border:3px solid rgba(194,146,47,.55); box-shadow:0 16px 38px -18px rgba(23,18,15,.6); }
+    .jg-reward-cap{ font-size:.78rem; color:rgba(42,35,30,.6); line-height:1.45; margin-top:.6rem; }
+
     /* Chispas de celebración */
     .jg-spark{ position:absolute; width:8px; height:8px; border-radius:50%; background:#C2922F; opacity:0; pointer-events:none; }
     .jg-awake .jg-spark{ animation:jgSpark 1.4s ease-out forwards; }
@@ -503,13 +510,19 @@
               <div class="jg-pearl jg-p1 on">1</div><div class="jg-pearl jg-p2 on">2</div><div class="jg-pearl jg-p3 on">3</div>
               <div class="jg-pearl jg-p4 on">4</div><div class="jg-pearl jg-p5 on">5</div><div class="jg-pearl jg-p6 on">6</div><div class="jg-pearl jg-p7 on">7</div>
             </div>
+            <div class="jg-reward">
+              <p class="jg-reward-tag">Y vuestro super regalo…</p>
+              <h3 class="jg-reward-title">¡Un dumpling GIGANTE para cada uno! 🥟</h3>
+              <img src="assets/regalo-dumpling.jpg" alt="Un enorme dumpling de sopa al vapor, el premio de los Guardianes del Dragón de Jade" loading="lazy" />
+              <p class="jg-reward-cap">Un <span class="font-cn">灌汤包</span> (guàntāngbāo) tan grande que se come con pajita. ¡Uno para Olivia y otro para Blai!<br><span class="text-inksoft/55">Foto: Windmemories · Wikimedia Commons · CC BY-SA 4.0</span></p>
+            </div>
             <button id="jgPrint" type="button" class="mt-8 inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-paper bg-cinnabar hover:bg-cinnabarDark transition-colors px-5 py-3 rounded-full">Imprimir / guardar diploma</button>
           </div>
         </div>
         <div class="jg-cert-lock">
           <div class="text-4xl" aria-hidden="true">🔒</div>
           <p class="font-display text-xl font-600 text-ink">Vuestro diploma está sellado</p>
-          <p class="text-inksoft/70 text-sm max-w-sm">Reunid las <strong>7 perlas</strong> completando las pruebas de cada ciudad y el Dragón de Jade os entregará el diploma de Guardianes.</p>
+          <p class="text-inksoft/70 text-sm max-w-sm">Reunid las <strong>7 perlas</strong> completando las pruebas de cada ciudad y el Dragón de Jade os entregará el diploma de Guardianes… y un <strong>super regalo sorpresa</strong> 🎁.</p>
           <p class="font-mono text-[0.7rem] uppercase tracking-wider text-clay mt-1"><span id="jgCertCount">0</span> / 7 perlas</p>
         </div>
       </div>
