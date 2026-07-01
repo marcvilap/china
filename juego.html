@@ -112,11 +112,18 @@
       radial-gradient(circle at 50% 0%, rgba(194,146,47,.14), transparent 60%), var(--cream); }
 
     /* Super regalo */
-    .jg-reward{ margin-top:1.5rem; padding-top:1.4rem; border-top:1px dashed rgba(140,90,60,.3); }
+    .jg-reward2{ text-align:center; }
     .jg-reward-tag{ display:inline-block; font-family:'Space Mono',monospace; font-size:.62rem; text-transform:uppercase; letter-spacing:.2em; color:var(--gold); }
-    .jg-reward-title{ font-family:'Fraunces',serif; font-weight:700; font-size:1.35rem; line-height:1.15; color:var(--ink); margin-top:.3rem; }
-    .jg-reward img{ display:block; width:100%; max-width:440px; margin:1rem auto 0; border-radius:16px; border:3px solid rgba(194,146,47,.55); box-shadow:0 16px 38px -18px rgba(23,18,15,.6); }
-    .jg-reward-cap{ font-size:.78rem; color:rgba(42,35,30,.6); line-height:1.45; margin-top:.6rem; }
+    .jg-reward-title{ font-family:'Fraunces',serif; font-weight:700; font-size:1.4rem; line-height:1.15; color:var(--ink); margin-top:.3rem; }
+    .jg-reward-imgwrap{ position:relative; display:inline-block; margin:1.1rem auto .3rem; max-width:420px; width:100%; }
+    .jg-reward-imgwrap img{ display:block; width:100%; border-radius:16px; border:3px solid rgba(194,146,47,.55); box-shadow:0 16px 38px -18px rgba(23,18,15,.6); filter:blur(16px) saturate(.85); transition:filter 1.1s ease; }
+    .jg-reward2.revealed .jg-reward-imgwrap img{ filter:none; }
+    .jg-reward-badge{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:3rem; filter:drop-shadow(0 3px 8px rgba(0,0,0,.45)); animation:jgFloat 4s ease-in-out infinite; }
+    .jg-reward2.revealed .jg-reward-badge{ display:none; }
+    .jg-reward-cap{ font-size:.82rem; color:rgba(42,35,30,.7); line-height:1.5; margin-top:.7rem; }
+    .jg-open-txt{ display:none; }
+    .jg-reward2.revealed .jg-open-txt{ display:block; }
+    .jg-reward2.revealed .jg-lock-txt{ display:none; }
 
     /* Chispas de celebración */
     .jg-spark{ position:absolute; width:8px; height:8px; border-radius:50%; background:#C2922F; opacity:0; pointer-events:none; }
@@ -125,7 +132,7 @@
 
     @media (prefers-reduced-motion: reduce){
       html{ scroll-behavior:auto; }
-      .jg-awake .jg-dragon, .jg-pearl.on, .jg-pearl.on::after, .jg-cert.unlocked .jg-cert-inner, .jg-awake .jg-spark{ animation:none; }
+      .jg-awake .jg-dragon, .jg-pearl.on, .jg-pearl.on::after, .jg-cert.unlocked .jg-cert-inner, .jg-awake .jg-spark, .jg-reward-badge{ animation:none; }
     }
   </style>
 </head>
@@ -488,6 +495,22 @@
     </div>
   </section>
 
+  <!-- ════════════ SUPER REGALO ════════════ -->
+  <section class="bg-paper">
+    <div class="max-w-6xl mx-auto px-6 pb-8">
+      <div class="jg-reward2 bg-cream border border-clay/20 rounded-2xl p-6 md:p-8" id="jgReward">
+        <p class="jg-reward-tag">El super regalo secreto</p>
+        <h3 class="jg-reward-title">¿Qué esconde el Dragón para vosotros? 🎁</h3>
+        <div class="jg-reward-imgwrap">
+          <img src="assets/regalo-dumpling.jpg" alt="El super regalo de los Guardianes del Dragón de Jade" loading="lazy" />
+          <span class="jg-reward-badge" aria-hidden="true">🎁</span>
+        </div>
+        <p class="jg-reward-cap jg-lock-txt">Ya veis la foto de vuestro premio… ¡pero está borrosa! <strong>Reunid las 7 perlas</strong> y se enfocará. ¿Adivináis qué es? 👀</p>
+        <p class="jg-reward-cap jg-open-txt">¡Un <span class="font-cn">包子</span> squishy antiestrés con carita, en su propia cestita de bambú! Uno para <strong>Olivia</strong> y otro para <strong>Blai</strong>… ¡y el color es sorpresa! 🥟</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ════════════ CERTIFICADO ════════════ -->
   <section class="bg-paper">
     <div class="max-w-6xl mx-auto px-6 py-16 md:py-24">
@@ -509,12 +532,6 @@
             <div class="jg-track mt-6">
               <div class="jg-pearl jg-p1 on">1</div><div class="jg-pearl jg-p2 on">2</div><div class="jg-pearl jg-p3 on">3</div>
               <div class="jg-pearl jg-p4 on">4</div><div class="jg-pearl jg-p5 on">5</div><div class="jg-pearl jg-p6 on">6</div><div class="jg-pearl jg-p7 on">7</div>
-            </div>
-            <div class="jg-reward">
-              <p class="jg-reward-tag">Y vuestro super regalo…</p>
-              <h3 class="jg-reward-title">¡Un dumpling squishy para cada uno! 🥟</h3>
-              <img src="assets/regalo-dumpling.jpg" alt="Juguete squishy antiestrés con forma de dumpling y carita sonriente, en su cestita de bambú" loading="lazy" />
-              <p class="jg-reward-cap">Un <span class="font-cn">包子</span> squishy antiestrés con carita, que viene en su propia cestita de bambú. ¡Uno para Olivia y otro para Blai… y el color es sorpresa!</p>
             </div>
             <button id="jgPrint" type="button" class="mt-8 inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-paper bg-cinnabar hover:bg-cinnabarDark transition-colors px-5 py-3 rounded-full">Imprimir / guardar diploma</button>
           </div>
@@ -619,6 +636,8 @@
 
         var complete = done === CITIES;
         if (cert) { cert.classList.toggle('unlocked', complete); cert.classList.toggle('locked', !complete); }
+        var reward = document.getElementById('jgReward');
+        if (reward) reward.classList.toggle('revealed', complete);
         heroWrap.classList.toggle('jg-awake', complete);
 
         if (complete && !wasComplete) { celebrate(); }
