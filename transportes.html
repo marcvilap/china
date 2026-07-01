@@ -469,55 +469,85 @@
           actions: [{ label: "Recibo PDF", href: "docs/billete-tren-1-pekin-xian-14jul.pdf", kind: "primary", blank: true }, { label: "Ver día 6", href: "itinerario.html#dia-6", kind: "ghost" }]
         },
         seg2: {
-          kick: "Tren G1839 · 16 jul · prerreservado", title: "Xi'an → Chengdu", status: "prerreservado", pending: true,
+          kick: "Tren G1839 · 16 jul · prerreservado", title: "Xi'an → Chengdu", status: "prerreservado",
           dep: { t: "11:30", name: "Xi'an Norte", cn: "西安北" }, arr: { t: "14:58", name: "Chengdu Este", cn: "成都东" }, dur: "3 h 28 m",
           legs: [
-            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Gran Meliá Xi'an</b> (Qujiang) a <b>Xi'an Norte</b>: <b>~40–50 min</b> en metro/taxi." },
-            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Chengdu Este</b> al <b>Ascott Raffles City Chengdu</b> (junto al metro): <b>~20–30 min</b>." }
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Gran Meliá Xi'an</b> (Qujiang) a <b>Xi'an Norte (西安北)</b>: <b>~40–50 min</b> en metro/taxi.", gmaps: {
+              embed: "https://maps.google.com/maps?saddr=Gran%20Melia%20Xian%2C%20Qujiang&daddr=Xian%20North%20Railway%20Station&dirflg=r&output=embed",
+              link: "https://www.google.com/maps/dir/?api=1&origin=Gran%20Melia%20Xian%2C%20Qujiang&destination=Xian%20North%20Railway%20Station&travelmode=transit"
+            } },
+            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Chengdu Este (成都东)</b> al <b>Ascott Raffles City Chengdu</b> (junto al metro): <b>~20–30 min</b>.", gmaps: {
+              embed: "https://maps.google.com/maps?saddr=Chengdu%20East%20Railway%20Station&daddr=Ascott%20Raffles%20City%20Chengdu&dirflg=r&output=embed",
+              link: "https://www.google.com/maps/dir/?api=1&origin=Chengdu%20East%20Railway%20Station&destination=Ascott%20Raffles%20City%20Chengdu&travelmode=transit"
+            } }
           ],
           facts: [["Tren", "G1839 · 2ª clase"], ["Precio", "167,16 € · 4 pax"], ["Reserva", "1598740030699273"], ["Estado", "Prerreservado"], ["Emisión", "~2 jul"], ["Distancia", "~660 km"]],
           note: "Prerreserva pagada en Trip.com: los billetes se emiten automáticamente al abrir la venta (~2 jul); si no quedaran plazas, se reembolsa. El vuelo es posible, pero más caro y peor puerta a puerta.",
           actions: [{ label: "Ver día 8", href: "itinerario.html#dia-8", kind: "ghost" }]
         },
         seg3: {
-          kick: "Tren D368 · 19 jul · prerreservado", title: "Chengdu → Chongqing", status: "prerreservado", pending: true,
+          kick: "Tren D368 · 19 jul · prerreservado", title: "Chengdu → Chongqing", status: "prerreservado",
           dep: { t: "10:50", name: "Chengdu Este", cn: "成都东" }, arr: { t: "12:52", name: "Chongqing Norte", cn: "重庆北" }, dur: "2 h 2 m",
           legs: [
-            { ic: "🏨", label: "Del hotel a la estación", text: "Del hotel de Chengdu a <b>Chengdu Este</b>: <b>~20–30 min</b> en metro/taxi." },
-            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Chongqing Norte</b> al <b>IntercityHotel Chongqing Jiefangbei</b>: <b>~30–50 min</b>. Las estaciones son enormes." }
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Ascott Raffles City Chengdu</b> a <b>Chengdu Este (成都东)</b>: <b>~20–30 min</b> en metro/taxi.", gmaps: {
+              embed: "https://maps.google.com/maps?saddr=Ascott%20Raffles%20City%20Chengdu&daddr=Chengdu%20East%20Railway%20Station&dirflg=r&output=embed",
+              link: "https://www.google.com/maps/dir/?api=1&origin=Ascott%20Raffles%20City%20Chengdu&destination=Chengdu%20East%20Railway%20Station&travelmode=transit"
+            } },
+            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Chongqing Norte (重庆北)</b> al <b>IntercityHotel Chongqing Jiefangbei</b>: <b>~30–50 min</b>. Las estaciones son enormes.", gmaps: {
+              embed: "https://maps.google.com/maps?saddr=Chongqing%20North%20Railway%20Station&daddr=IntercityHotel%20Chongqing%20Jiefangbei&dirflg=r&output=embed",
+              link: "https://www.google.com/maps/dir/?api=1&origin=Chongqing%20North%20Railway%20Station&destination=IntercityHotel%20Chongqing%20Jiefangbei&travelmode=transit"
+            } }
           ],
           facts: [["Tren", "D368 · 2ª clase"], ["Precio", "64,72 € · 4 pax"], ["Reserva", "1598740030740655"], ["Estado", "Prerreservado"], ["Emisión", "~5 jul"], ["Distancia", "~300 km"]],
           note: "Prerreserva pagada en Trip.com: los billetes se emiten automáticamente al abrir la venta (~5 jul); si no quedaran plazas, se reembolsa. El vuelo no compensa: aeropuertos lejos y trayecto cortísimo en tren.",
           actions: [{ label: "Ver día 11", href: "itinerario.html#dia-11", kind: "ghost" }]
         },
         seg4: {
-          kick: "Tren G1473 · 21 jul · prerreservado", title: "Chongqing → Zhangjiajie", status: "prerreservado", pending: true,
+          kick: "Tren G1473 · 21 jul · prerreservado", title: "Chongqing → Zhangjiajie", status: "prerreservado",
           dep: { t: "10:40", name: "Chongqing Este", cn: "重庆东" }, arr: { t: "13:22", name: "Zhangjiajie Oeste", cn: "张家界西" }, dur: "2 h 42 m",
           legs: [
-            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>IntercityHotel</b> (Jiefangbei) a <b>Chongqing Este (重庆东)</b>: <b>~30–50 min</b>. Ojo: salís de <b>Chongqing Este</b>, no de Chongqing Norte (donde llegasteis el día 11). Salid con tiempo." },
-            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Zhangjiajie Oeste</b> al <b>Avatar Mountain Resort</b> (Wulingyuan): <b>~40–50 min</b> en coche." }
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>IntercityHotel</b> (Jiefangbei) a <b>Chongqing Este (重庆东)</b>: <b>~30–50 min</b>. Ojo: salís de <b>Chongqing Este</b>, no de Chongqing Norte (donde llegasteis el día 11). Salid con tiempo.", gmaps: {
+              embed: "https://maps.google.com/maps?saddr=IntercityHotel%20Chongqing%20Jiefangbei&daddr=Chongqing%20East%20Railway%20Station&dirflg=r&output=embed",
+              link: "https://www.google.com/maps/dir/?api=1&origin=IntercityHotel%20Chongqing%20Jiefangbei&destination=Chongqing%20East%20Railway%20Station&travelmode=transit"
+            } },
+            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Zhangjiajie Oeste (张家界西)</b> al <b>Avatar Mountain Resort</b> (Wulingyuan): <b>~40–50 min</b> en coche.", gmaps: {
+              embed: "https://maps.google.com/maps?saddr=Zhangjiajie%20West%20Railway%20Station&daddr=Avatar%20Mountain%20Resort%20Wulingyuan%20Zhangjiajie&dirflg=d&output=embed",
+              link: "https://www.google.com/maps/dir/?api=1&origin=Zhangjiajie%20West%20Railway%20Station&destination=Avatar%20Mountain%20Resort%20Wulingyuan%20Zhangjiajie&travelmode=driving"
+            } }
           ],
           facts: [["Tren", "G1473 · 2ª clase"], ["Precio", "130,24 € · 4 pax"], ["Reserva", "1598740030837273"], ["Estado", "Prerreservado"], ["Emisión", "~7 jul"], ["Distancia", "~580 km"]],
           note: "Prerreserva pagada en Trip.com: los billetes se emiten automáticamente al abrir la venta (~7 jul); si no quedaran plazas, se reembolsa. Tren directo de alta velocidad (2 h 42 m); el vuelo va con escala y es poco práctico.",
           actions: [{ label: "Ver día 13", href: "itinerario.html#dia-13", kind: "ghost" }]
         },
         seg5: {
-          kick: "Tren G6167 · 24 jul · prerreservado", title: "Zhangjiajie → Furong", status: "prerreservado", pending: true,
+          kick: "Tren G6167 · 24 jul · prerreservado", title: "Zhangjiajie → Furong", status: "prerreservado",
           dep: { t: "17:45", name: "Zhangjiajie Oeste", cn: "张家界西" }, arr: { t: "18:08", name: "Furongzhen", cn: "芙蓉镇" }, dur: "23 min",
           legs: [
-            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Avatar Mountain Resort</b> (Wulingyuan) a <b>Zhangjiajie Oeste</b>: <b>~40–50 min</b> en coche." },
-            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Furongzhen</b> al <b>Annai · Xizhou Ji Hotel</b> (pueblo de Furong): <b>~10–15 min</b>." }
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Avatar Mountain Resort</b> (Wulingyuan) a <b>Zhangjiajie Oeste (张家界西)</b>: <b>~40–50 min</b> en coche.", gmaps: {
+              embed: "https://maps.google.com/maps?saddr=Avatar%20Mountain%20Resort%20Wulingyuan%20Zhangjiajie&daddr=Zhangjiajie%20West%20Railway%20Station&dirflg=d&output=embed",
+              link: "https://www.google.com/maps/dir/?api=1&origin=Avatar%20Mountain%20Resort%20Wulingyuan%20Zhangjiajie&destination=Zhangjiajie%20West%20Railway%20Station&travelmode=driving"
+            } },
+            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Furongzhen (芙蓉镇)</b> al <b>Annai · Xizhou Ji Hotel</b> (pueblo de Furong): <b>~10–15 min</b>.", gmaps: {
+              embed: "https://maps.google.com/maps?saddr=Furongzhen%20Railway%20Station&daddr=Furong%20Ancient%20Town&dirflg=d&output=embed",
+              link: "https://www.google.com/maps/dir/?api=1&origin=Furongzhen%20Railway%20Station&destination=Furong%20Ancient%20Town&travelmode=driving"
+            } }
           ],
           facts: [["Tren", "G6167 · 2ª clase"], ["Precio", "28,68 € · 4 pax"], ["Reserva", "1598740030867880"], ["Estado", "Prerreservado"], ["Emisión", "~10 jul"], ["Distancia", "~60 km"]],
           note: "Prerreserva pagada en Trip.com: los billetes se emiten automáticamente al abrir la venta (~10 jul); si no quedaran plazas, se reembolsa. Tren rapidísimo (23 min). Alternativa: coche privado ~2 h · €70–90/coche.",
           actions: [{ label: "Ver día 16", href: "itinerario.html#dia-16", kind: "ghost" }]
         },
         seg6: {
-          kick: "Tren G221 · 25 jul · prerreservado", title: "Furong → Shanghái", status: "prerreservado", pending: true,
+          kick: "Tren G221 · 25 jul · prerreservado", title: "Furong → Shanghái", status: "prerreservado",
           dep: { t: "15:03", name: "Furongzhen", cn: "芙蓉镇" }, arr: { t: "21:57", name: "Shanghái Hongqiao", cn: "上海虹桥" }, dur: "6 h 54 m",
           legs: [
-            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Annai · Xizhou Ji Hotel</b> (pueblo de Furong) a <b>Furongzhen</b>: <b>~10–15 min</b>." },
-            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Shanghái Hongqiao</b> al <b>Holiday Inn Shanghai Nanjing Road</b>: <b>~30–40 min</b> en metro L2 (+ corto taxi). Llegada de noche." }
+            { ic: "🏨", label: "Del hotel a la estación", text: "Del <b>Annai · Xizhou Ji Hotel</b> (pueblo de Furong) a <b>Furongzhen (芙蓉镇)</b>: <b>~10–15 min</b>.", gmaps: {
+              embed: "https://maps.google.com/maps?saddr=Furong%20Ancient%20Town&daddr=Furongzhen%20Railway%20Station&dirflg=d&output=embed",
+              link: "https://www.google.com/maps/dir/?api=1&origin=Furong%20Ancient%20Town&destination=Furongzhen%20Railway%20Station&travelmode=driving"
+            } },
+            { ic: "🚉", label: "De la estación al hotel", text: "De <b>Shanghái Hongqiao (上海虹桥)</b> al <b>Holiday Inn Shanghai Nanjing Road</b>: <b>~30–40 min</b> en metro L2 (+ corto taxi). Llegada de noche.", gmaps: {
+              embed: "https://maps.google.com/maps?saddr=Shanghai%20Hongqiao%20Railway%20Station&daddr=Holiday%20Inn%20Shanghai%20Nanjing%20Road&dirflg=r&output=embed",
+              link: "https://www.google.com/maps/dir/?api=1&origin=Shanghai%20Hongqiao%20Railway%20Station&destination=Holiday%20Inn%20Shanghai%20Nanjing%20Road&travelmode=transit"
+            } }
           ],
           facts: [["Tren", "G221 · 2ª clase · directo"], ["Precio", "413,72 € · 4 pax"], ["Reserva", "1598740030930582"], ["Estado", "Prerreservado"], ["Emisión", "~11 jul"], ["Distancia", "~1.450 km"]],
           note: "Prerreserva pagada en Trip.com: los billetes se emiten automáticamente al abrir la venta (~11 jul); si no quedaran plazas, se reembolsa. Directo y sin transbordos: el broche moderno del viaje.",
