@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Dragón de Jade · Juego · China 2026</title>
+  <meta name="description" content="La Búsqueda del Dragón de Jade: una aventura por las 7 ciudades de nuestro viaje a China. Misiones mágicas para Olivia y Blai, con perlas que recuperar y palabras chinas que aprender." />
+
+  <!-- Tipografías auto-alojadas (sin Google Fonts; funciona en China/offline) -->
+  <link rel="stylesheet" href="assets/fonts.css" />
+
+  <!-- Tailwind compilado (CSS estático, sin Play CDN) -->
+  <link rel="stylesheet" href="assets/tailwind.css" />
+
+  <style>
+    html { scroll-behavior: smooth; }
+    html, body { overflow-x: clip; max-width: 100%; }
+    body { -webkit-font-smoothing: antialiased; }
+    img, table, iframe { max-width: 100%; }
+
+    /* Foco accesible */
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: 2px solid #C2922F;
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* ============ JUEGO · El Dragón de Jade ============ */
+    :root{
+      --paper:#F4EEE1; --cream:#FBF7EE; --ink:#17120F; --inksoft:#2A231E;
+      --cinnabar:#A8362B; --gold:#C2922F; --jade:#3F6B57; --clay:#8C5A3C;
+    }
+
+    /* Dragón */
+    .jg-dragon{ font-size:5rem; line-height:1; display:inline-block; filter:grayscale(1) opacity(.45); transition:filter .8s ease, transform .8s ease; }
+    .jg-awake .jg-dragon{ filter:none; animation:jgFloat 4s ease-in-out infinite; }
+    @keyframes jgFloat{ 0%,100%{ transform:translateY(0) rotate(-2deg);} 50%{ transform:translateY(-10px) rotate(2deg);} }
+
+    /* Riel de perlas */
+    .jg-track{ display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; }
+    .jg-pearl{
+      position:relative; width:40px; height:40px; border-radius:50%;
+      box-shadow: inset 0 -4px 8px rgba(0,0,0,.28), inset 0 3px 6px rgba(255,255,255,.55);
+      filter:grayscale(1) opacity(.4); transition:filter .5s ease, transform .5s ease;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Space Mono',monospace; font-size:.7rem; font-weight:700; color:rgba(255,255,255,.9);
+      text-shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+    .jg-pearl.on{ filter:none; animation:jgPop .5s ease; }
+    .jg-pearl.on::after{
+      content:""; position:absolute; inset:-6px; border-radius:50%;
+      box-shadow:0 0 14px 3px var(--glow, rgba(194,146,47,.7)); animation:jgGlow 2.4s ease-in-out infinite;
+    }
+    @keyframes jgPop{ 0%{ transform:scale(.5);} 60%{ transform:scale(1.25);} 100%{ transform:scale(1);} }
+    @keyframes jgGlow{ 0%,100%{ opacity:.55;} 50%{ opacity:1;} }
+    .jg-p1{ background:radial-gradient(circle at 32% 28%, #F0A090, #E0563F 55%, #A8362B); --glow:rgba(224,86,63,.75); }
+    .jg-p2{ background:radial-gradient(circle at 32% 28%, #E5C39C, #C98A5A 55%, #8C5A3C); --glow:rgba(201,138,90,.75); }
+    .jg-p3{ background:radial-gradient(circle at 32% 28%, #FFFFFF, #DDEBE2 55%, #9CC3B0); --glow:rgba(156,195,176,.8); }
+    .jg-p4{ background:radial-gradient(circle at 32% 28%, #FAD39A, #F2A65A 55%, #D9662B); --glow:rgba(242,166,90,.8); }
+    .jg-p5{ background:radial-gradient(circle at 32% 28%, #CDE0D5, #9FB8A8 55%, #3F6B57); --glow:rgba(63,107,87,.8); }
+    .jg-p6{ background:radial-gradient(circle at 32% 28%, #BFE2F5, #7FB6D9 55%, #2E6E9E); --glow:rgba(127,182,217,.85); }
+    .jg-p7{ background:radial-gradient(circle at 32% 28%, #E7CFF5, #C79BE0 55%, #7E4FB0); --glow:rgba(199,155,224,.85); }
+
+    /* Progreso */
+    .jg-barwrap{ height:12px; background:rgba(140,90,60,.18); border-radius:999px; overflow:hidden; }
+    .jg-bar{ height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,#C2922F,#A8362B); transition:width .6s ease; }
+
+    /* Tarjeta de ciudad */
+    .jg-city{
+      background:var(--cream); border:1px solid rgba(140,90,60,.22); border-radius:18px; overflow:hidden;
+      transition:box-shadow .3s ease, border-color .3s ease, transform .3s ease;
+    }
+    .jg-city.is-done{ border-color:rgba(194,146,47,.65); box-shadow:0 0 0 1px rgba(194,146,47,.35), 0 18px 40px -24px rgba(23,18,15,.5); }
+    .jg-city-head{ display:flex; align-items:center; gap:.85rem; padding:1rem 1.25rem; background:linear-gradient(180deg, rgba(23,18,15,.04), transparent); }
+    .jg-city-num{ font-family:'Space Mono',monospace; font-size:.7rem; color:var(--clay); letter-spacing:.1em; }
+    .jg-city-title{ font-family:'Fraunces',serif; font-weight:600; font-size:1.35rem; color:var(--ink); line-height:1.05; }
+    .jg-city-cn{ font-family:'Noto Serif SC',serif; color:var(--gold); font-size:.95rem; }
+    .jg-city-body{ padding:0 1.25rem 1.25rem; }
+
+    .jg-clue{ font-style:italic; color:rgba(42,35,30,.78); font-size:.9rem; line-height:1.55; border-left:2px solid rgba(194,146,47,.55); padding-left:.8rem; margin:.25rem 0 1rem; }
+
+    /* Misiones */
+    .jg-mission{ display:flex; gap:.6rem; align-items:flex-start; padding:.4rem 0; border-top:1px dashed rgba(140,90,60,.18); }
+    .jg-mission:first-of-type{ border-top:0; }
+    .jg-chk{ margin-top:.15rem; width:1.2rem; height:1.2rem; flex:0 0 auto; accent-color:#C2922F; cursor:pointer; }
+    .jg-mission label{ font-size:.9rem; line-height:1.4; color:var(--inksoft); cursor:pointer; }
+    .jg-chk:checked ~ label .jg-mtext{ text-decoration:line-through; text-decoration-color:rgba(194,146,47,.7); color:rgba(42,35,30,.5); }
+    .jg-age{ display:inline-block; font-family:'Space Mono',monospace; font-size:.6rem; text-transform:uppercase; letter-spacing:.06em; padding:1px 7px; border-radius:999px; margin-right:.35rem; white-space:nowrap; vertical-align:.06em; }
+    .jg-age-peque{ background:rgba(63,107,87,.16); color:#33604c; }
+    .jg-age-mayor{ background:rgba(168,54,43,.14); color:#8f2a20; }
+    .jg-age-juntos{ background:rgba(194,146,47,.18); color:#8a6413; }
+    .jg-age-palabra{ background:rgba(23,18,15,.08); color:#4a3f36; }
+
+    /* Palabra mágica */
+    .jg-word{ display:flex; align-items:center; gap:.9rem; background:var(--paper); border:1px solid rgba(140,90,60,.2); border-radius:14px; padding:.7rem .9rem; margin:.9rem 0 .2rem; }
+    .jg-word-cn{ font-family:'Noto Serif SC',serif; font-size:2rem; line-height:1; color:var(--cinnabar); }
+    .jg-word-py{ font-family:'Space Mono',monospace; font-size:.8rem; color:var(--gold); letter-spacing:.04em; }
+    .jg-word-mean{ font-size:.85rem; color:rgba(42,35,30,.75); }
+
+    /* Sello "conseguida" en cabecera de ciudad */
+    .jg-city-pearl{ margin-left:auto; }
+
+    /* Certificado */
+    .jg-cert{ position:relative; }
+    .jg-cert-inner{ transition:filter .8s ease, opacity .8s ease; }
+    .jg-cert.locked .jg-cert-inner{ filter:blur(7px) grayscale(.7); opacity:.5; pointer-events:none; }
+    .jg-cert-lock{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:.5rem; padding:1.5rem; }
+    .jg-cert.unlocked .jg-cert-lock{ display:none; }
+    .jg-cert.unlocked .jg-cert-inner{ animation:jgReveal 1s ease; }
+    @keyframes jgReveal{ 0%{ transform:scale(.94); opacity:0;} 100%{ transform:scale(1); opacity:1;} }
+    .jg-diploma{ border:2px solid rgba(194,146,47,.6); border-radius:16px; padding:2rem 1.5rem; text-align:center; background:
+      radial-gradient(circle at 50% 0%, rgba(194,146,47,.14), transparent 60%), var(--cream); }
+
+    /* Chispas de celebración */
+    .jg-spark{ position:absolute; width:8px; height:8px; border-radius:50%; background:#C2922F; opacity:0; pointer-events:none; }
+    .jg-awake .jg-spark{ animation:jgSpark 1.4s ease-out forwards; }
+    @keyframes jgSpark{ 0%{ opacity:1; transform:translate(0,0) scale(1);} 100%{ opacity:0; transform:translate(var(--dx), var(--dy)) scale(.3);} }
+
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior:auto; }
+      .jg-awake .jg-dragon, .jg-pearl.on, .jg-pearl.on::after, .jg-cert.unlocked .jg-cert-inner, .jg-awake .jg-spark{ animation:none; }
+    }
+  </style>
+</head>
+
+<body class="bg-paper font-body text-ink antialiased">
+
+  <!-- ════════════ NAV ════════════ -->
+  <header class="sticky top-0 z-50 bg-paper/85 backdrop-blur-md border-b border-clay/15">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 group">
+        <span class="font-cn text-2xl text-cinnabar leading-none">行</span>
+        <span class="font-display font-600 tracking-tight text-ink">China 2026</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <ul class="hidden sm:flex items-center gap-6 text-sm font-500">
+          <li><a href="index.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Inicio</a></li>
+          <li><a href="itinerario.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Itinerario</a></li>
+          <li><a href="hoteles.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Hoteles</a></li>
+          <li><a href="transportes.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Transportes</a></li>
+          <li><a href="preparativos.html" class="text-inksoft/80 hover:text-cinnabar transition-colors">Preparativos</a></li>
+          <li><a href="juego.html" aria-current="page" class="text-cinnabar transition-colors">Juego</a></li>
+        </ul>
+        <a href="index.html#ruta" class="hidden sm:inline-flex text-xs font-mono uppercase tracking-widest text-paper bg-cinnabar hover:bg-cinnabarDark transition-colors px-4 py-2 rounded-full">Ver ruta</a>
+        <button id="navToggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu" class="sm:hidden inline-flex items-center justify-center w-10 h-10 -mr-2 rounded-lg text-ink hover:bg-clay/10 transition-colors">
+          <svg id="navIconOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" /></svg>
+          <svg id="navIconClose" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobileMenu" class="sm:hidden hidden border-t border-clay/15 bg-paper/95 backdrop-blur-md">
+      <ul class="max-w-6xl mx-auto px-6 py-3 text-sm font-500">
+        <li><a href="index.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Inicio</a></li>
+        <li><a href="itinerario.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Itinerario</a></li>
+        <li><a href="hoteles.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Hoteles</a></li>
+        <li><a href="transportes.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Transportes</a></li>
+        <li><a href="preparativos.html" class="js-navlink block py-2.5 text-inksoft/80 hover:text-cinnabar transition-colors">Preparativos</a></li>
+        <li><a href="juego.html" aria-current="page" class="js-navlink block py-2.5 text-cinnabar transition-colors">Juego</a></li>
+        <li class="pt-2 pb-1"><a href="index.html#ruta" class="js-navlink block text-center text-xs font-mono uppercase tracking-widest text-paper bg-cinnabar hover:bg-cinnabarDark transition-colors px-4 py-3 rounded-full">Ver ruta</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ════════════ HERO ════════════ -->
+  <section id="jg-hero" class="relative overflow-hidden bg-ink text-paper">
+    <div class="absolute -right-10 -bottom-24 font-cn text-[22rem] md:text-[34rem] leading-none text-paper opacity-[0.04] select-none pointer-events-none" aria-hidden="true">龙</div>
+    <div class="max-w-6xl mx-auto px-6 py-16 md:py-24 relative">
+      <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">Una aventura secreta para el viaje</p>
+      <div class="jg-dragon" id="jgDragon" aria-hidden="true">🐉</div>
+      <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-700 leading-[0.95] mt-4 mb-6">La Búsqueda del<br><span class="text-gold">Dragón de Jade</span></h1>
+      <p class="text-paper/80 text-lg leading-relaxed max-w-2xl">
+        Hace mucho, mucho tiempo, el <strong class="text-paper">Dragón de Jade</strong> velaba por toda China desde las nubes.
+        Un día perdió sus <strong class="text-gold">7 Perlas Mágicas</strong>, y cada una cayó en una ciudad distinta de nuestro viaje.
+        Sin ellas, el dragón se ha quedado dormido…
+      </p>
+      <p class="text-paper/80 text-lg leading-relaxed max-w-2xl mt-4">
+        Vuestra misión, <strong class="text-paper">Olivia</strong> y <strong class="text-paper">Blai</strong>: viajar de ciudad en ciudad,
+        superar las pruebas de cada lugar y <strong class="text-gold">recuperar las 7 perlas</strong> para despertarlo.
+        ¿Estáis listos, Guardianes?
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════════ PROGRESO ════════════ -->
+  <section class="bg-paper">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="bg-cream border border-clay/20 rounded-2xl p-6 md:p-8">
+        <div class="flex items-center justify-between flex-wrap gap-3 mb-4">
+          <div>
+            <p class="font-mono text-[0.7rem] uppercase tracking-widest text-clay">Perlas reunidas</p>
+            <p class="font-display text-2xl font-700 text-ink"><span id="jgCount">0</span> <span class="text-inksoft/55">/ 7</span></p>
+          </div>
+          <button id="jgReset" type="button" class="font-mono text-[0.7rem] uppercase tracking-wider text-clay border border-clay/20 hover:bg-clay/10 transition-colors px-3 py-1.5 rounded-full">Empezar de nuevo</button>
+        </div>
+        <div class="jg-barwrap mb-6"><div class="jg-bar" id="jgBar"></div></div>
+        <div class="jg-track" id="jgTrack">
+          <div class="jg-pearl jg-p1" data-pearl="1" title="Pekín">1</div>
+          <div class="jg-pearl jg-p2" data-pearl="2" title="Xi'an">2</div>
+          <div class="jg-pearl jg-p3" data-pearl="3" title="Chengdu">3</div>
+          <div class="jg-pearl jg-p4" data-pearl="4" title="Chongqing">4</div>
+          <div class="jg-pearl jg-p5" data-pearl="5" title="Zhangjiajie">5</div>
+          <div class="jg-pearl jg-p6" data-pearl="6" title="Furong">6</div>
+          <div class="jg-pearl jg-p7" data-pearl="7" title="Shanghái">7</div>
+        </div>
+        <p class="text-center text-xs text-inksoft/55 mt-4 leading-relaxed">
+          Completa las pruebas de una ciudad para encender su perla. <span class="text-inksoft/70">Se guarda solo en este dispositivo</span>, así podéis ir marcándolas durante el viaje.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ CÓMO SE JUEGA ════════════ -->
+  <section class="bg-paper">
+    <div class="max-w-6xl mx-auto px-6 pb-8">
+      <div class="grid sm:grid-cols-2 md:grid-cols-2 gap-4">
+        <div class="bg-cream border border-clay/20 rounded-xl p-5">
+          <p class="font-mono text-[0.65rem] uppercase tracking-widest text-jade mb-2">Cómo se juega</p>
+          <ul class="text-sm text-inksoft/80 space-y-1.5 leading-snug">
+            <li>· En cada ciudad hay <strong>4 pruebas</strong>. Al superarlas todas, ¡su perla se enciende!</li>
+            <li>· Marca cada prueba cuando la consigáis. El dragón lo recuerda.</li>
+            <li>· Reunid las <strong>7 perlas</strong> y desvelaréis vuestro <strong>diploma de Guardianes</strong>.</li>
+          </ul>
+        </div>
+        <div class="bg-cream border border-clay/20 rounded-xl p-5">
+          <p class="font-mono text-[0.65rem] uppercase tracking-widest text-jade mb-2">Cada prueba tiene su color</p>
+          <ul class="text-sm text-inksoft/80 space-y-1.5 leading-snug">
+            <li><span class="jg-age jg-age-peque">🐣 Peque</span> reto para el explorador de 6 años</li>
+            <li><span class="jg-age jg-age-mayor">🦉 Mayor</span> reto para el explorador de 10 años</li>
+            <li><span class="jg-age jg-age-juntos">🤝 Juntos</span> una prueba para toda la familia</li>
+            <li><span class="jg-age jg-age-palabra">🗣️ Palabra</span> aprende una palabra mágica en chino</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ CIUDADES / MISIONES ════════════ -->
+  <section class="bg-paper">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="grid md:grid-cols-2 gap-5" id="jgCities">
+
+        <!-- 1 · PEKÍN -->
+        <article class="jg-city" data-city="1">
+          <div class="jg-city-head">
+            <div>
+              <p class="jg-city-num">Perla 1 · Imperial</p>
+              <h3 class="jg-city-title">Pekín <span class="jg-city-cn">北京</span></h3>
+            </div>
+            <div class="jg-pearl jg-p1 jg-city-pearl" data-pearl="1">1</div>
+          </div>
+          <div class="jg-city-body">
+            <p class="jg-clue">«En la ciudad del emperador, entre murallas infinitas y tejados de dragón, escondí mi Perla Imperial. Solo quien mire hacia arriba la encontrará.»</p>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c1m1">
+              <label for="c1m1"><span class="jg-age jg-age-peque">🐣 Peque</span><span class="jg-mtext">En la Gran Muralla, cuenta 10 torres de vigilancia mientras subes.</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c1m2">
+              <label for="c1m2"><span class="jg-age jg-age-mayor">🦉 Mayor</span><span class="jg-mtext">En la Ciudad Prohibida, encuentra un dragón y un fénix tallados (el emperador y la emperatriz).</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c1m3">
+              <label for="c1m3"><span class="jg-age jg-age-juntos">🤝 Juntos</span><span class="jg-mtext">Foto de familia en pose de «guardianes» delante de la Muralla.</span></label>
+            </div>
+            <div class="jg-word">
+              <div class="jg-word-cn">你好</div>
+              <div><div class="jg-word-py">nǐ hǎo</div><div class="jg-word-mean">«hola»</div></div>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c1m4">
+              <label for="c1m4"><span class="jg-age jg-age-palabra">🗣️ Palabra</span><span class="jg-mtext">Aprende a decir <strong>你好</strong> y saluda a alguien en chino.</span></label>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2 · XI'AN -->
+        <article class="jg-city" data-city="2">
+          <div class="jg-city-head">
+            <div>
+              <p class="jg-city-num">Perla 2 · de los Guerreros</p>
+              <h3 class="jg-city-title">Xi'an <span class="jg-city-cn">西安</span></h3>
+            </div>
+            <div class="jg-pearl jg-p2 jg-city-pearl" data-pearl="2">2</div>
+          </div>
+          <div class="jg-city-body">
+            <p class="jg-clue">«Un ejército de barro lleva 2.200 años montando guardia. Entre miles de guerreros de piedra dejé mi perla de arcilla. Ninguno es igual a otro… mírales las caras.»</p>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c2m1">
+              <label for="c2m1"><span class="jg-age jg-age-peque">🐣 Peque</span><span class="jg-mtext">Busca dos Guerreros de Terracota con peinado o cara diferente.</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c2m2">
+              <label for="c2m2"><span class="jg-age jg-age-mayor">🦉 Mayor</span><span class="jg-mtext">Averigua cuántos guerreros se calcula que hay enterrados (pista: ¡más de 8.000!).</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c2m3">
+              <label for="c2m3"><span class="jg-age jg-age-juntos">🤝 Juntos</span><span class="jg-mtext">Dad una vuelta en bici por encima de la muralla de Xi'an al atardecer.</span></label>
+            </div>
+            <div class="jg-word">
+              <div class="jg-word-cn">龙</div>
+              <div><div class="jg-word-py">lóng</div><div class="jg-word-mean">«dragón»</div></div>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c2m4">
+              <label for="c2m4"><span class="jg-age jg-age-palabra">🗣️ Palabra</span><span class="jg-mtext">Aprende <strong>龙</strong> (dragón) y dibújalo en un papel.</span></label>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3 · CHENGDU -->
+        <article class="jg-city" data-city="3">
+          <div class="jg-city-head">
+            <div>
+              <p class="jg-city-num">Perla 3 · del Panda</p>
+              <h3 class="jg-city-title">Chengdu <span class="jg-city-cn">成都</span></h3>
+            </div>
+            <div class="jg-pearl jg-p3 jg-city-pearl" data-pearl="3">3</div>
+          </div>
+          <div class="jg-city-body">
+            <p class="jg-clue">«En la tierra más tranquila viven unos osos blancos y negros que solo comen bambú. Uno de ellos juega con mi perla blanca como si fuera una pelota.»</p>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c3m1">
+              <label for="c3m1"><span class="jg-age jg-age-peque">🐣 Peque</span><span class="jg-mtext">Encuentra un panda bebé y ponle un nombre secreto.</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c3m2">
+              <label for="c3m2"><span class="jg-age jg-age-mayor">🦉 Mayor</span><span class="jg-mtext">Descubre cuánto bambú puede comer un panda en un día (pista: ¡hasta 38 kg!).</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c3m3">
+              <label for="c3m3"><span class="jg-age jg-age-juntos">🤝 Juntos</span><span class="jg-mtext">Imitad todos a un panda comiendo bambú y haceos una foto.</span></label>
+            </div>
+            <div class="jg-word">
+              <div class="jg-word-cn">熊猫</div>
+              <div><div class="jg-word-py">xióngmāo</div><div class="jg-word-mean">«panda»</div></div>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c3m4">
+              <label for="c3m4"><span class="jg-age jg-age-palabra">🗣️ Palabra</span><span class="jg-mtext">Aprende <strong>熊猫</strong> y llama «xióngmāo» a cada panda que veas.</span></label>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4 · CHONGQING -->
+        <article class="jg-city" data-city="4">
+          <div class="jg-city-head">
+            <div>
+              <p class="jg-city-num">Perla 4 · de Fuego</p>
+              <h3 class="jg-city-title">Chongqing <span class="jg-city-cn">重庆</span></h3>
+            </div>
+            <div class="jg-pearl jg-p4 jg-city-pearl" data-pearl="4">4</div>
+          </div>
+          <div class="jg-city-body">
+            <p class="jg-clue">«Una ciudad de rascacielos donde un tren atraviesa un edificio y las casas cuelgan sobre el río. Mi perla naranja brilla entre las luces, como una olla de fuego.»</p>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c4m1">
+              <label for="c4m1"><span class="jg-age jg-age-peque">🐣 Peque</span><span class="jg-mtext">Busca el tren que entra por dentro de un edificio (el monorraíl de Liziba).</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c4m2">
+              <label for="c4m2"><span class="jg-age jg-age-mayor">🦉 Mayor</span><span class="jg-mtext">Averigua por qué piso del edificio pasa el monorraíl de Liziba (pista: ¡el 6º!).</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c4m3">
+              <label for="c4m3"><span class="jg-age jg-age-juntos">🤝 Juntos</span><span class="jg-mtext">Foto de noche en Hongya Cave iluminada (¡parece «El viaje de Chihiro»!).</span></label>
+            </div>
+            <div class="jg-word">
+              <div class="jg-word-cn">火</div>
+              <div><div class="jg-word-py">huǒ</div><div class="jg-word-mean">«fuego»</div></div>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c4m4">
+              <label for="c4m4"><span class="jg-age jg-age-palabra">🗣️ Palabra</span><span class="jg-mtext">Aprende <strong>火</strong> (fuego): la comida de Chongqing es famosa por lo picante.</span></label>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5 · ZHANGJIAJIE -->
+        <article class="jg-city" data-city="5">
+          <div class="jg-city-head">
+            <div>
+              <p class="jg-city-num">Perla 5 · de las Nubes</p>
+              <h3 class="jg-city-title">Zhangjiajie <span class="jg-city-cn">张家界</span></h3>
+            </div>
+            <div class="jg-pearl jg-p5 jg-city-pearl" data-pearl="5">5</div>
+          </div>
+          <div class="jg-city-body">
+            <p class="jg-clue">«Montañas altísimas que parecen flotar entre la niebla, como en la película Avatar. Escondí mi perla verde en lo alto, donde suben los ascensores de cristal.»</p>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c5m1">
+              <label for="c5m1"><span class="jg-age jg-age-peque">🐣 Peque</span><span class="jg-mtext">Encuentra la montaña que parece flotar entre las nubes.</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c5m2">
+              <label for="c5m2"><span class="jg-age jg-age-mayor">🦉 Mayor</span><span class="jg-mtext">Descubre qué película se inspiró aquí (Avatar) y cuánto sube el ascensor Bailong (326 m).</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c5m3">
+              <label for="c5m3"><span class="jg-age jg-age-juntos">🤝 Juntos</span><span class="jg-mtext">Subid al ascensor de cristal más alto del mundo… ¡y gritad juntos!</span></label>
+            </div>
+            <div class="jg-word">
+              <div class="jg-word-cn">山</div>
+              <div><div class="jg-word-py">shān</div><div class="jg-word-mean">«montaña»</div></div>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c5m4">
+              <label for="c5m4"><span class="jg-age jg-age-palabra">🗣️ Palabra</span><span class="jg-mtext">Aprende <strong>山</strong> (montaña): fíjate, ¡el dibujo parece tres picos!</span></label>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6 · FURONG -->
+        <article class="jg-city" data-city="6">
+          <div class="jg-city-head">
+            <div>
+              <p class="jg-city-num">Perla 6 · del Agua</p>
+              <h3 class="jg-city-title">Furong <span class="jg-city-cn">芙蓉镇</span></h3>
+            </div>
+            <div class="jg-pearl jg-p6 jg-city-pearl" data-pearl="6">6</div>
+          </div>
+          <div class="jg-city-body">
+            <p class="jg-clue">«Un pueblo antiguo construido sobre una cascada. De día ruge el agua y de noche todo se ilumina. Mi perla azul descansa tras la cortina de agua.»</p>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c6m1">
+              <label for="c6m1"><span class="jg-age jg-age-peque">🐣 Peque</span><span class="jg-mtext">Cierra los ojos y escucha la cascada contando hasta 20.</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c6m2">
+              <label for="c6m2"><span class="jg-age jg-age-mayor">🦉 Mayor</span><span class="jg-mtext">Descubre por qué llaman a Furong «el pueblo sobre el agua».</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c6m3">
+              <label for="c6m3"><span class="jg-age jg-age-juntos">🤝 Juntos</span><span class="jg-mtext">Foto de familia con la cascada iluminada de noche detrás.</span></label>
+            </div>
+            <div class="jg-word">
+              <div class="jg-word-cn">水</div>
+              <div><div class="jg-word-py">shuǐ</div><div class="jg-word-mean">«agua»</div></div>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c6m4">
+              <label for="c6m4"><span class="jg-age jg-age-palabra">🗣️ Palabra</span><span class="jg-mtext">Aprende <strong>水</strong> (agua) y pídela así la próxima vez que tengas sed.</span></label>
+            </div>
+          </div>
+        </article>
+
+        <!-- 7 · SHANGHÁI -->
+        <article class="jg-city" data-city="7">
+          <div class="jg-city-head">
+            <div>
+              <p class="jg-city-num">Perla 7 · de Oriente</p>
+              <h3 class="jg-city-title">Shanghái <span class="jg-city-cn">上海</span></h3>
+            </div>
+            <div class="jg-pearl jg-p7 jg-city-pearl" data-pearl="7">7</div>
+          </div>
+          <div class="jg-city-body">
+            <p class="jg-clue">«La última perla es la más especial: es tan famosa que le pusieron su nombre a una torre entera, la Perla de Oriente. Encontradla y despertaréis al dragón.»</p>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c7m1">
+              <label for="c7m1"><span class="jg-age jg-age-peque">🐣 Peque</span><span class="jg-mtext">Cuenta 5 rascacielos iluminados en el paseo del Bund.</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c7m2">
+              <label for="c7m2"><span class="jg-age jg-age-mayor">🦉 Mayor</span><span class="jg-mtext">Encuentra la torre «Perla de Oriente» (东方明珠): ¡la última perla del dragón!</span></label>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c7m3">
+              <label for="c7m3"><span class="jg-age jg-age-juntos">🤝 Juntos</span><span class="jg-mtext">Foto final de los Guardianes con el skyline: ¡lo habéis conseguido!</span></label>
+            </div>
+            <div class="jg-word">
+              <div class="jg-word-cn">谢谢</div>
+              <div><div class="jg-word-py">xièxie</div><div class="jg-word-mean">«gracias»</div></div>
+            </div>
+            <div class="jg-mission">
+              <input type="checkbox" class="jg-chk" id="c7m4">
+              <label for="c7m4"><span class="jg-age jg-age-palabra">🗣️ Palabra</span><span class="jg-mtext">Aprende <strong>谢谢</strong> y dale las gracias a China por este viaje.</span></label>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ CERTIFICADO ════════════ -->
+  <section class="bg-paper">
+    <div class="max-w-6xl mx-auto px-6 py-16 md:py-24">
+      <div class="jg-cert locked" id="jgCert">
+        <div class="jg-cert-inner">
+          <div class="jg-diploma">
+            <p class="font-mono text-[0.65rem] uppercase tracking-[0.3em] text-gold mb-3">Diploma oficial</p>
+            <div class="text-4xl mb-2" aria-hidden="true">🐉</div>
+            <h2 class="font-display text-3xl md:text-5xl font-700 text-ink leading-tight">Guardianes del<br>Dragón de Jade</h2>
+            <p class="font-cn text-cinnabar text-2xl mt-2">玉龙守护者</p>
+            <p class="text-inksoft/80 text-base leading-relaxed max-w-xl mx-auto mt-5">
+              Se reconoce a <strong class="text-ink">Olivia</strong> y <strong class="text-ink">Blai</strong> como
+              <strong>Guardianes del Dragón de Jade</strong> por haber reunido las <strong>7 Perlas Mágicas</strong>
+              a lo largo de toda China, en el verano de <strong>2026</strong>.
+            </p>
+            <p class="text-inksoft/70 text-sm leading-relaxed max-w-xl mx-auto mt-3">
+              El dragón ha despertado y volará para siempre en vuestros recuerdos. 谢谢.
+            </p>
+            <div class="jg-track mt-6">
+              <div class="jg-pearl jg-p1 on">1</div><div class="jg-pearl jg-p2 on">2</div><div class="jg-pearl jg-p3 on">3</div>
+              <div class="jg-pearl jg-p4 on">4</div><div class="jg-pearl jg-p5 on">5</div><div class="jg-pearl jg-p6 on">6</div><div class="jg-pearl jg-p7 on">7</div>
+            </div>
+            <button id="jgPrint" type="button" class="mt-8 inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-paper bg-cinnabar hover:bg-cinnabarDark transition-colors px-5 py-3 rounded-full">Imprimir / guardar diploma</button>
+          </div>
+        </div>
+        <div class="jg-cert-lock">
+          <div class="text-4xl" aria-hidden="true">🔒</div>
+          <p class="font-display text-xl font-600 text-ink">Vuestro diploma está sellado</p>
+          <p class="text-inksoft/70 text-sm max-w-sm">Reunid las <strong>7 perlas</strong> completando las pruebas de cada ciudad y el Dragón de Jade os entregará el diploma de Guardianes.</p>
+          <p class="font-mono text-[0.7rem] uppercase tracking-wider text-clay mt-1"><span id="jgCertCount">0</span> / 7 perlas</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ FOOTER ════════════ -->
+  <footer class="bg-ink text-paper/70">
+    <div class="max-w-6xl mx-auto px-6 py-12 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-cn text-cinnabar text-2xl">行</span>
+        <span class="font-display font-600 text-paper">Mi Gran Viaje a China · 2026</span>
+      </div>
+      <p class="font-mono text-xs text-paper/40">Pekín · Xi'an · Chengdu · Chongqing · Zhangjiajie · Furong · Shanghái</p>
+    </div>
+  </footer>
+
+  <!-- Menú móvil -->
+  <script>
+    (function () {
+      var btn = document.getElementById('navToggle');
+      var menu = document.getElementById('mobileMenu');
+      if (!btn || !menu) return;
+      var iOpen = document.getElementById('navIconOpen');
+      var iClose = document.getElementById('navIconClose');
+      function setOpen(open) {
+        menu.classList.toggle('hidden', !open);
+        if (iOpen) iOpen.classList.toggle('hidden', open);
+        if (iClose) iClose.classList.toggle('hidden', !open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      }
+      btn.addEventListener('click', function () { setOpen(menu.classList.contains('hidden')); });
+      menu.querySelectorAll('.js-navlink').forEach(function (a) {
+        a.addEventListener('click', function () { setOpen(false); });
+      });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth >= 640) setOpen(false);
+      });
+    })();
+  </script>
+
+  <!-- Lógica del juego -->
+  <script>
+    (function () {
+      var KEY = 'china2026_juego';
+      var CITIES = 7, PER_CITY = 4;
+      var boxes = Array.prototype.slice.call(document.querySelectorAll('.jg-chk'));
+      if (!boxes.length) return;
+
+      var state = {};
+      try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { state = {}; }
+
+      function save() {
+        var out = {};
+        boxes.forEach(function (b) { if (b.checked) out[b.id] = 1; });
+        try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (e) {}
+      }
+
+      function cityDone(city) {
+        for (var i = 1; i <= PER_CITY; i++) {
+          var el = document.getElementById('c' + city + 'm' + i);
+          if (!el || !el.checked) return false;
+        }
+        return true;
+      }
+
+      function setPearl(pearl, on) {
+        document.querySelectorAll('.jg-pearl[data-pearl="' + pearl + '"]').forEach(function (p) {
+          p.classList.toggle('on', on);
+        });
+      }
+
+      var dragon = document.getElementById('jgHero') || document.body;
+      var heroWrap = document.getElementById('jg-hero') || document.body;
+      var cert = document.getElementById('jgCert');
+      var wasComplete = false;
+
+      function render() {
+        var done = 0;
+        for (var c = 1; c <= CITIES; c++) {
+          var d = cityDone(c);
+          if (d) done++;
+          setPearl(c, d);
+          var card = document.querySelector('.jg-city[data-city="' + c + '"]');
+          if (card) card.classList.toggle('is-done', d);
+        }
+        var countEl = document.getElementById('jgCount');
+        if (countEl) countEl.textContent = done;
+        var certCount = document.getElementById('jgCertCount');
+        if (certCount) certCount.textContent = done;
+        var bar = document.getElementById('jgBar');
+        if (bar) bar.style.width = Math.round(done / CITIES * 100) + '%';
+
+        var complete = done === CITIES;
+        if (cert) { cert.classList.toggle('unlocked', complete); cert.classList.toggle('locked', !complete); }
+        heroWrap.classList.toggle('jg-awake', complete);
+
+        if (complete && !wasComplete) { celebrate(); }
+        wasComplete = complete;
+      }
+
+      function celebrate() {
+        var host = heroWrap;
+        var rect = 60; // spread
+        for (var i = 0; i < 16; i++) {
+          var s = document.createElement('span');
+          s.className = 'jg-spark';
+          var d = document.getElementById('jgDragon');
+          var base = d || host;
+          s.style.left = '50%'; s.style.top = '30%';
+          var ang = (Math.PI * 2) * (i / 16);
+          s.style.setProperty('--dx', (Math.cos(ang) * (80 + i * 6)) + 'px');
+          s.style.setProperty('--dy', (Math.sin(ang) * (80 + i * 6)) + 'px');
+          s.style.background = i % 2 ? '#C2922F' : '#A8362B';
+          host.appendChild(s);
+          (function (node) { setTimeout(function () { node.remove(); }, 1600); })(s);
+        }
+      }
+
+      // init
+      boxes.forEach(function (b) {
+        if (state[b.id]) b.checked = true;
+        b.addEventListener('change', function () { save(); render(); });
+      });
+
+      var reset = document.getElementById('jgReset');
+      if (reset) reset.addEventListener('click', function () {
+        if (!confirm('¿Seguro que queréis empezar la aventura de nuevo? Se borrarán todas las perlas conseguidas.')) return;
+        boxes.forEach(function (b) { b.checked = false; });
+        wasComplete = false;
+        save(); render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      var print = document.getElementById('jgPrint');
+      if (print) print.addEventListener('click', function () { window.print(); });
+
+      render();
+    })();
+  </script>
+
+</body>
+</html>
